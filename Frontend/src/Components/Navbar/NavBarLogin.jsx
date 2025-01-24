@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const NavBar = () => {
+const NavBarLogin = () => {
   const navigate = useNavigate();
-  const handleSignIn = () => {
-    navigate("/signin");
+
+  const handleProfile = () => {
+    navigate("/profile");
   };
-  const handleSignUp = () => {
-    navigate("/signup");
+  const handleCart = () => {
+    navigate("/cart");
   };
   const handleHome = () => {
     navigate("/");
   };
   const handleAllbooks = () => {
     navigate("/allbooks");
-  };
-  const handleContact = () => {
-    navigate("/contact");
   };
   const handleCategories = () => {
     navigate("/categories");
@@ -47,19 +45,19 @@ const NavBar = () => {
             Categories
           </p>
           <p
-            onClick={() => handleContact()}
+            onClick={handleCart}
             className="cursor-pointer relative hover:after:w-full after:transition-all after:duration-300 after:block after:h-0.5 after:w-0 after:bg-white"
           >
-            Contact
+            Cart
           </p>
         </div>
 
         <div className="hidden md:flex items-center space-x-7">
           <button
-            onClick={() => handleSignIn()}
+            onClick={handleProfile}
             className="bg-blue-500 text-white w-20 rounded-md border-white p-1 border-2 cursor-pointer hover:text-blue-500 hover:bg-white hover:font-semibold"
           >
-            Sign In
+            Profile
           </button>
         </div>
 
@@ -91,27 +89,18 @@ const NavBar = () => {
         >
           Categories
         </p>
-        <p
-          onClick={() => handleContact()}
-          className="cursor-pointer hover:underline"
-        >
-          Contact
+        <p onClick={handleCart} className="cursor-pointer hover:underline">
+          Cart
         </p>
         <button
-          onClick={() => handleSignIn()}
+          onClick={handleProfile}
           className="bg-blue-500 text-white w-full rounded-md border-white p-2 border-2 cursor-pointer hover:text-blue-500 hover:bg-white hover:font-semibold"
         >
-          Sign In
-        </button>
-        <button
-          onClick={() => handleSignUp()}
-          className="bg-blue-500 text-white w-full rounded-md border-white p-2 border-2 cursor-pointer hover:text-blue-500 hover:bg-white hover:font-semibold"
-        >
-          Sign Up
+          Profile
         </button>
       </div>
     </div>
   );
 };
 
-export default NavBar;
+export default NavBarLogin;
