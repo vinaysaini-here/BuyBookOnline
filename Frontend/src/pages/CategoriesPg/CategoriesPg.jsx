@@ -26,7 +26,7 @@ const CategoriesPg = () => {
   return (
     <div>
       <NavBar />
-      <div className="bg-gray-100 w-full h-93vh flex justify-center items-center box-border">
+      <div className="bg-gray-100 w-full  flex justify-center items-center box-border">
         <div className="w-11/12 md:w-4/5 pt-5 flex flex-col">
           <h1 className="text-2xl font-bold text-center mb-4 text-headingColor">
             Our Collection Of Products
@@ -34,24 +34,30 @@ const CategoriesPg = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-4 pb-14">
             {categories.map((category, index) => (
-              <Link
-                key={index}
-                to={`/category/${category.name
-                  .toLowerCase()
-                  .replace(/ /g, "-")}`}
-                className="relative group rounded-lg overflow-hidden shadow hover:shadow-lg transition duration-300"
-              >
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="w-full h-40 object-cover"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                  <h2 className="text-white text-lg font-medium">
-                    {category.name}
-                  </h2>
-                </div>
-              </Link>
+              <div className="h-48 ">
+                <Link
+                  key={index}
+                  to={`/category/${category.name
+                    .toLowerCase()
+                    .replace(/ /g, "-")}`}
+                  className="relative h-40 group rounded-t-lg overflow-hidden shadow hover:shadow-lg transition duration-300 flex justify-center bg-slate-300"
+                >
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="h-full object-cover"
+                  />
+
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                    <h2 className="text-white text-lg font-medium">
+                      {category.name}
+                    </h2>
+                  </div>
+                </Link>
+                <p className="w-full rounded-b-lg text-center text-2xl bottom-0 text-white bg-black bg-opacity-30">
+                  {category.name}
+                </p>
+              </div>
             ))}
           </div>
         </div>
