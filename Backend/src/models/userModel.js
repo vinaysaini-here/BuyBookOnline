@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema(
     profilePic: { type: String, default: "" },
     role: { type: String, enum: ["author", "user"], default: "user" },
     is_verified: { type: Boolean, default: false },
-    favourates: [{ type: mongoose.Types.ObjectId, ref: "Book" }],
+    favourites: [{ type: mongoose.Types.ObjectId, ref: "Book" }],
     cart: [{ type: mongoose.Types.ObjectId, ref: "Book" }],
     orders: [{ type: mongoose.Types.ObjectId, ref: "order" }],
 
@@ -19,5 +19,5 @@ const userSchema = new mongoose.Schema(
 );
 
 // const User = mongoose.model("User", userSchema);
-const User = mongoose.models.User || mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 export default User;

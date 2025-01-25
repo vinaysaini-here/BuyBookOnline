@@ -7,9 +7,15 @@ import cors from "cors";
 import passport from "passport";
 import userRoutes from "./src/routes/auth.routes.js";
 import bookRoutes from "./src/routes/book.routes.js";
+import favoritesRoutes from "./src/routes/favorites.routes.js"; 
+import cartRoutes from "./src/routes/cart.routes.js";
+import orderRoutes from "./src/routes/order.routes.js";
+
+
 import "./src/config/passport-jwt-strategy.js";
 import setTokensCookies from "./src/utils/setTokensCookies.js";
 import "./src/config/googleStrategy.js";
+
 
 const app = express();
 
@@ -31,6 +37,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use("/api/user", userRoutes);
 app.use("/api/book", bookRoutes);
+app.use("/api/favorites", favoritesRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/order", orderRoutes);
+
 
 app.get(
   "/auth/google",
