@@ -10,24 +10,32 @@ const HomeMain = () => {
       inline: "nearest",
     });
   };
+
   return (
-    <div className="h-93vh flex bg-homebg bg-no-repeat bg-cover bg-center">
-      <div className="w-3/6 ml-72 flex flex-col items-center justify-center bg-white bg-opacity-10">
-        <h1 className="text-4xl font-semibold text-white text-center">
-          Dicover books
+    <div className="h-93vh flex flex-col md:flex-row bg-homebg bg-no-repeat bg-cover bg-center">
+      {/* Left Section */}
+      <div className="w-full md:w-3/6 md:ml-72 flex flex-col items-center justify-center bg-white bg-opacity-10 p-6 md:p-0">
+        <h1 className="text-3xl md:text-4xl font-semibold text-white text-center">
+          Discover books
         </h1>
-        <p className="mt-4 text-xl text-white text-center ">
+        <p className="mt-4 text-base md:text-xl text-white text-center">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum,
           distinctio.
         </p>
-        <div className="mt-8">
-          <button onClick={() => scrollTo("Featured")} className="text-white text-x bg-black font-semibold border-yellow-100 px-10 py-2 hover:bg-white hover:text-black rounded-full">
+        <div className="mt-6 md:mt-8">
+          <button
+            onClick={() => scrollTo("Featured")}
+            className="text-white text-sm md:text-base bg-black font-semibold border-HomeBgColor px-6 md:px-10 py-2 hover:bg-white hover:text-black rounded-full transition duration-300"
+          >
             Explore
           </button>
         </div>
       </div>
-      <div className="w-full h-auto flex items-center justify-center">
-        {/* <img src={assets.homebg}/> */}
+
+      {/* Right Section */}
+      <div className="w-full h-auto flex items-center justify-center mt-6 md:mt-0">
+        {/* Uncomment the image below if needed */}
+        {/* <img src={assets.homebg} alt="Background" className="w-full md:w-auto" /> */}
       </div>
     </div>
   );

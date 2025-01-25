@@ -3,15 +3,18 @@ import BookCol from "../Book/BookCol";
 
 const Featured = () => {
   return (
-    <section id="Featured">
-    <div className="bg-yellow-100 w-full h-full flex justify-center items-center box-border ">
-      <div className="w-4/5 pt-10 flex flex-col  ">
-        <div className=" text-4xl text-gray-800 font-semibold py-3">
-          <p>Featured Books</p>{" "}
+    <section
+      id="Featured"
+      className="bg-HomeBgColor w-full flex justify-center items-center box-border py-10"
+    >
+      <div className="w-4/5 flex flex-col">
+        {/* Section Title */}
+        <div className="text-4xl text-gray-800 font-semibold py-3 text-center">
+          <p>Featured Books</p>
         </div>
 
-        <div className="flex justify-between w-full py-4 gap-4">
-          <BookCol />
+        {/* Book Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 py-6">
           <BookCol />
           <BookCol />
           <BookCol />
@@ -19,7 +22,6 @@ const Featured = () => {
           <BookCol />
         </div>
       </div>
-    </div>
     </section>
   );
 };

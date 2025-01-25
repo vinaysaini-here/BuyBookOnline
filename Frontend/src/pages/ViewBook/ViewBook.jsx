@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "../../Components/Navbar/NavBar";
+import Footer from "../../Components/Footer/Footer";
 import assets from "../../assets/assets";
 import { FaRegHeart } from "react-icons/fa";
 
@@ -82,7 +83,12 @@ const ViewBook = () => {
                 <h1 className="text-3xl font-semibold pb-2">
                   Double Bed & Side Tables
                 </h1>
-                <button onClick={handleFavourites} className="text-3xl text-slate-700 pr-1"><FaRegHeart/></button>
+                <button
+                  onClick={handleFavourites}
+                  className="text-3xl text-slate-700 pr-1"
+                >
+                  <FaRegHeart />
+                </button>
               </div>
               <p className="text-2xl text-gray-800 font-semibold mt-2">
                 $54.98
@@ -100,6 +106,14 @@ const ViewBook = () => {
                 <li>Lorem ipsum dolor sit amet, consectetuer adipi</li>
                 <li>Lorem ipsum dolor sit amet, consectetuer adipi</li>
               </ul>
+            </div>
+            {/* Extra Information */}
+            <div className="text-gray-500 text-sm mt-7">
+              <p>✅ Free worldwide shipping on all orders over $100</p>
+              <p>
+                ✅ Delivers in 3-7 Working Days{" "}
+                <span className="text-blue-500">Shipping & Return</span>
+              </p>
             </div>
 
             <div className="flex items-center mt-6">
@@ -136,18 +150,10 @@ const ViewBook = () => {
                 Buy Now
               </button>
             </div>
-
-            {/* Extra Information */}
-            <div className="text-gray-500 text-sm mt-7">
-              <p>✅ Free worldwide shipping on all orders over $100</p>
-              <p>
-                ✅ Delivers in 3-7 Working Days{" "}
-                <span className="text-blue-500">Shipping & Return</span>
-              </p>
-            </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

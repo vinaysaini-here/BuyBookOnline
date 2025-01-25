@@ -56,8 +56,8 @@ const Cart = () => {
   return (
     <div>
       <NavBarLogin />
-      <div className="w-full h-[100%] flex justify-center align-middle bg-yellow-100">
-        <div className="p-8 bg-yellow-100 min-h-screen w-80vw ml-auto mr-auto">
+      <div className="w-full h-[100%] flex justify-center align-middle bg-HomeBgColor">
+        <div className="p-8 bg-HomeBgColor min-h-screen w-80vw ml-auto mr-auto">
           <h1 className="text-2xl font-bold mb-6">
             Cart ({cartItems.length} item{cartItems.length > 1 ? "s" : ""})
           </h1>
@@ -118,21 +118,6 @@ const Cart = () => {
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-6">
-            <div className="flex items-center space-x-4">
-              <input
-                type="text"
-                placeholder="Coupon code"
-                value={coupon}
-                onChange={(e) => setCoupon(e.target.value)}
-                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                onClick={handleApplyCoupon}
-                className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900"
-              >
-                Apply Coupon
-              </button>
-            </div>
             <button
               onClick={() => alert("Cart updated!")}
               className="mt-4 md:mt-0 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900"

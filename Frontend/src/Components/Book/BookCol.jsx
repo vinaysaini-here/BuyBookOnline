@@ -1,9 +1,14 @@
 import React from "react";
 import assets from "../../assets/assets";
+import { useNavigate } from "react-router-dom";
 
 const BookCol = () => {
+    const navigate = useNavigate();
+    const handleViewBook = () => {
+      navigate("/viewbook");
+    };
   return (
-    <div className="w-52 h-72 rounded-lg bg-white flex flex-col">
+    <div onClick={handleViewBook} className="w-52 h-72 rounded-lg bg-white flex flex-col">
       <div className="relative w-48 h-72 m-auto ">
         <img
           src={assets.BookImg}

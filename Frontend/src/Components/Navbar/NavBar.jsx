@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const NavBar = () => {
   const navigate = useNavigate();
   const handleSignIn = () => {
-    navigate("/signin");
+    navigate("/login");
   };
   const handleSignUp = () => {
     navigate("/signup");
@@ -25,7 +25,7 @@ const NavBar = () => {
 
   return (
     <div>
-      <div className="w-full h-16 bg-blue-500 flex justify-between items-center px-6 md:px-12 lg:px-40 text-lg text-white">
+      <div className="w-full h-16 bg-secondary flex justify-between items-center px-6 md:px-12 lg:px-40 text-lg text-white">
         <p className="text-2xl font-bold">BuyBookOnline</p>
         <div className="hidden md:flex justify-between items-center space-x-7">
           <p
@@ -57,7 +57,7 @@ const NavBar = () => {
         <div className="hidden md:flex items-center space-x-7">
           <button
             onClick={() => handleSignIn()}
-            className="bg-blue-500 text-white w-20 rounded-md border-white p-1 border-2 cursor-pointer hover:text-blue-500 hover:bg-white hover:font-semibold"
+            className="bg-secondary text-white w-20 rounded-md border-white p-1 border-2 cursor-pointer hover:text-secondary hover:bg-white hover:font-semibold"
           >
             Sign In
           </button>
@@ -77,7 +77,7 @@ const NavBar = () => {
         </div>
       </div>
       <div
-        className={`${MobileNav} w-full bg-blue-500 flex flex-col space-y-4 px-6 py-4 text-lg text-white md:hidden items-center`}
+        className={`${MobileNav} w-full bg-secondary flex flex-col space-y-4 px-6 py-4 text-lg text-white md:hidden items-center`}
       >
         <p onClick={handleHome} className="cursor-pointer hover:underline ">
           Home
@@ -99,13 +99,13 @@ const NavBar = () => {
         </p>
         <button
           onClick={() => handleSignIn()}
-          className="bg-blue-500 text-white w-full rounded-md border-white p-2 border-2 cursor-pointer hover:text-blue-500 hover:bg-white hover:font-semibold"
+          className="bg-secondary text-white w-full rounded-md border-white p-2 border-2 cursor-pointer hover:text-secondary hover:bg-white hover:font-semibold"
         >
           Sign In
         </button>
         <button
           onClick={() => handleSignUp()}
-          className="bg-blue-500 text-white w-full rounded-md border-white p-2 border-2 cursor-pointer hover:text-blue-500 hover:bg-white hover:font-semibold"
+          className="bg-secondary text-white w-full rounded-md border-white p-2 border-2 cursor-pointer hover:text-secondary hover:bg-white hover:font-semibold"
         >
           Sign Up
         </button>

@@ -2,13 +2,11 @@ import React from "react";
 import { FaGoogle } from "react-icons/fa";
 import assets from "../../assets/assets";
 import { Link, useNavigate } from "react-router-dom";
-import { Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useState } from "react";
 
-
 const colors = {
-
   primary: "#060606",
 
   background: "#f5f5f5",
@@ -17,8 +15,6 @@ const colors = {
 };
 
 const SignIn = () => {
-
-
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -33,16 +29,11 @@ const SignIn = () => {
     if (response) {
       navigate("/");
     }
-   
-
   };
 
   const handleGoogleLogin = async () => {
-    window.open(
-      `http://localhost:8000/auth/google`,
-      "_self"
-    );
-  }
+    window.open(`http://localhost:8000/auth/google`, "_self");
+  };
 
   return (
     <div className="bg-[#f5f5f5]">
@@ -62,7 +53,7 @@ const SignIn = () => {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="w-1/2 h-full bg-[#f5f5f5] flex flex-col p-20 justify-between items-center">
+        <div className="w-1/2 h-full bg-[#f5f5f5] flex flex-col p-20 gap-10 items-center">
           <h1 className="w-full max-w-[500px] mx-auto text-xl text-[#060606] font-semibold mr-auto">
             Buy Book Online
           </h1>
@@ -81,8 +72,11 @@ const SignIn = () => {
                   type="email"
                   placeholder="Email"
                   className="w-fulltext-black py-2 my-2 bg-transparent border-b border-black focus: outline-none"
-                  required value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  required
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                 />
 
                 <input
@@ -90,17 +84,26 @@ const SignIn = () => {
                   placeholder="Password"
                   className="w-fulltext-black py-2 my-2 bg-transparent border-b border-black focus: outline-none"
                   value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                 />
               </div>
 
               <div className="w-full flex flex-col my-4">
-                <Link to="/forgot-password" className="text-sm text-blue-600 underline underline-offset-2 cursor-pointer">
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-blue-600 underline underline-offset-2 cursor-pointer"
+                >
                   Forgot Password?
                 </Link>
               </div>
               <div className="w-full flex flex-col my-4">
-                <button type="submit" className="w-full text-white my-2 font-semibold bg-black rounded-md p-4 text-center flex items-center justify-center cursor-pointer" disabled={isLoggingIn}>
+                <button
+                  type="submit"
+                  className="w-full text-white my-2 font-semibold bg-black rounded-md p-4 text-center flex items-center justify-center cursor-pointer"
+                  disabled={isLoggingIn}
+                >
                   {isLoggingIn ? (
                     <>
                       <Loader2 className="h-5 w-5 animate-spin" />
@@ -122,7 +125,10 @@ const SignIn = () => {
               <p className="text-lg absolute text-black/80 bg-[#f5f5f5]">or</p>
             </div>
 
-            <button onClick={handleGoogleLogin} className="w-full ☐ text-black my-2 font-semibold bg-white border ☐ border-black/40 rounded-md p-4 text-center flex items-center justify-center cursor-pointer">
+            <button
+              onClick={handleGoogleLogin}
+              className="w-full ☐ text-black my-2 font-semibold bg-white border ☐ border-black/40 rounded-md p-4 text-center flex items-center justify-center cursor-pointer"
+            >
               <FaGoogle className="h-6 mr-2" />
               Log In With Google
             </button>

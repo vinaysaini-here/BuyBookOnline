@@ -1,36 +1,32 @@
 import React from "react";
 import BookCol from "../../Components/Book/BookCol";
 import NavBar from "../../Components/Navbar/NavBar";
+import Footer from "../../Components/Footer/Footer";
 
 const AllBooks = () => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <NavBar />
-      <div className="bg-yellow-100 w-full h-full flex justify-center items-center box-border ">
-        <div className="w-4/5 pt-5 flex flex-col  ">
-          <div className="py-3 flex justify-between">
-            <p className="text-4xl text-gray-800 font-semibold">
+      <div className="bg-gray-100 w-full flex justify-center items-center box-border pb-10">
+        <div className="w-11/12 md:w-4/5 pt-5 flex flex-col">
+          <div className="py-3 flex justify-center">
+            <p className="text-2xl font-bold sm:text-3xl md:text-3xl text-headingColor">
               All Books
-            </p>{" "}
+            </p>
           </div>
 
-          <div className="flex justify-between w-full py-4">
+          {/* Books Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 py-4">
             <BookCol />
             <BookCol />
             <BookCol />
             <BookCol />
             <BookCol />
             <BookCol />
-          </div>
-          <div className="flex justify-between w-full py-4 pb-16">
             <BookCol />
             <BookCol />
             <BookCol />
             <BookCol />
-            <BookCol />
-            <BookCol />
-          </div>
-          <div className="flex justify-between w-full py-4 pb-16">
             <BookCol />
             <BookCol />
             <BookCol />
@@ -40,6 +36,9 @@ const AllBooks = () => {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
