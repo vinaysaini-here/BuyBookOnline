@@ -23,6 +23,8 @@ const bookSchema = new mongoose.Schema(
         "Romance",
         "Mystery",
         "History",
+        "Horror",
+        "Motivational",
         "Others",
       ],
     },

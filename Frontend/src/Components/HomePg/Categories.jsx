@@ -5,7 +5,7 @@ import assets from "../../assets/assets";
 const Categories = () => {
   return (
     <div className="bg-HomeBgColor w-full h-full flex justify-center items-center box-border ">
-      <div className="w-4/5 pt-10 flex flex-col ">
+      <div className="w-4/5 pt-2 flex flex-col ">
         <h1 className="text-3xl text-headingColor font-bold mb-5 flex justify-center">
           Categories
         </h1>
@@ -19,7 +19,7 @@ const Categories = () => {
               className="absolute h-full m-auto object-cover"
             />
             <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-              <h2 className="text-white text-lg font-medium">Romantic</h2>
+              <h2 className="text-white text-lg font-medium">Romance</h2>
             </div>
           </Link>
           <div className="w-30% h-30rem flex flex-col justify-between">
@@ -32,7 +32,7 @@ const Categories = () => {
                 className="absolute h-full m-auto object-cover"
               />
               <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                <h2 className="text-white text-lg font-medium">Friction</h2>
+                <h2 className="text-white text-lg font-medium">Fantasy</h2>
               </div>
             </Link>
             <Link

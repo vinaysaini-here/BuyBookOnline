@@ -8,19 +8,19 @@ const CategoriesPg = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const categories = [
     { id: 1, name: "Fiction", image: assets.Book1 },
-    { id: 2, name: "Science", image: assets.Book3 },
-    { id: 3, name: "History", image: assets.Book4 },
-    { id: 4, name: "Biographies", image: assets.Book2 },
+    { id: 2, name: "Non-Fiction", image: assets.Book3 },
+    { id: 3, name: "Science", image: assets.Book4 },
+    { id: 4, name: "Biography", image: assets.Book2 },
 
-    { id: 5, name: "Fiction", image: assets.Book1 },
-    { id: 6, name: "Science", image: assets.Book3 },
-    { id: 7, name: "History", image: assets.Book4 },
-    { id: 8, name: "Biographies", image: assets.Book2 },
+    { id: 5, name: "Children", image: assets.Book1 },
+    { id: 6, name: "Fantasy", image: assets.Book3 },
+    { id: 7, name: "Romance", image: assets.Book4 },
+    { id: 8, name: "Mystery", image: assets.Book2 },
 
-    { id: 9, name: "Fiction", image: assets.Book1 },
-    { id: 10, name: "Science", image: assets.Book3 },
-    { id: 11, name: "History", image: assets.Book4 },
-    { id: 12, name: "Biographies", image: assets.Book2 },
+    { id: 9, name: "History", image: assets.Book1 },
+    { id: 10, name: "Horror", image: assets.Book1 },
+    { id: 11, name: "Motivational", image: assets.Book3 },
+    { id: 12, name: "Others", image: assets.Book3 },
   ];
 
   return (
@@ -34,13 +34,13 @@ const CategoriesPg = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-4 pb-14">
             {categories.map((category, index) => (
-              <div className="h-48 ">
+              <div className="h-56 ">
                 <Link
                   key={index}
                   to={`/category/${category.name
                     .toLowerCase()
                     .replace(/ /g, "-")}`}
-                  className="relative h-40 group rounded-t-lg overflow-hidden shadow hover:shadow-lg transition duration-300 flex justify-center bg-slate-300"
+                  className="relative h-48 group rounded-t-lg overflow-hidden shadow hover:shadow-lg transition duration-300 flex justify-center bg-slate-300"
                 >
                   <img
                     src={category.image}

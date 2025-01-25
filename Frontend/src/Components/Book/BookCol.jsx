@@ -3,22 +3,57 @@ import assets from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
 
 const BookCol = () => {
-    const navigate = useNavigate();
-    const handleViewBook = () => {
-      navigate("/viewbook");
-    };
+  const navigate = useNavigate();
+  const handleViewBook = () => {
+    navigate("/viewbook");
+  };
+  const addToCart = () => {
+    alert(`${book.title} item(s) added to the cart.`);
+  };
+  const book = {
+    title: "Book Name",
+    description: "This is a book that.",
+    price: "$125",
+    image: assets.BookImg,
+    rating: 4,
+  };
   return (
-    <div onClick={handleViewBook} className="w-52 h-72 rounded-lg bg-white flex flex-col">
-      <div className="relative w-48 h-72 m-auto ">
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-72">
+      {/* Image Section */}
+      <div onClick={handleViewBook} className="relative">
         <img
-          src={assets.BookImg}
-          alt=""
-          className="absolute h-full m-auto w-full object-cover pt-2"
+          src={book.image}
+          alt={book.title}
+          className="h-80 w-auto m-auto object-cover"
         />
       </div>
-      <div className="w-52 text-wrap text-black px-2">
-        <div className=" text-black text-lg font-semibold"> Book Name</div>
-        <div className="text-gray-700 text-sm">$400</div>
+
+      {/* Content Section */}
+      <div className="p-4">
+        <h2 onClick={handleViewBook} className="text-slate-800 text-lg font-bold">{book.title}</h2>
+        <p onClick={handleViewBook} className="text-gray-500 text-sm">{book.description}</p>
+
+        {/* Price and Rating */}
+        <div onClick={handleViewBook} className="flex justify-between items-center my-3">
+          <span className="text-lg font-bold text-gray-800">{book.price}</span>
+          <div className="flex">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <span
+                key={i}
+                className={`text-yellow-400 ${
+                  i < book.rating ? "fill-current" : "opacity-30"
+                }`}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Add to Cart Button */}
+        <button onClick={addToCart} className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded-md">
+          Add to Cart
+        </button>
       </div>
     </div>
   );
