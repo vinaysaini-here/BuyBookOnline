@@ -1,46 +1,42 @@
 import express from "express";
-import {
-  BookInfo,
-  DeleteBook,
-  UpdateBook,
-  GetAllBooks,
-  GetRecentBooks,
-  GetBookById,
-} from "../controllers/book.controller.js";
-
 import passport from "passport";
 
 import accessTokenAutoRefresh from "../middlewares/accessTokenAutoRefresh.js";
+import {
+  getAllOders,
+  getOrderhistory,
+  PlaceOrder,
+  updateOrderStatus,
+} from "../controllers/order.controller.js";
 
 const router = express.Router();
 
-// Private author Routes
-
 router.post(
-  "/saveBook",
+  "/placeOrder",
   accessTokenAutoRefresh,
   passport.authenticate("jwt", { session: false }),
-  BookInfo
+  PlaceOrder
 );
 
-router.patch(
-  "/updateBook",
+router.get(
+  "/getOrderHistory",
   accessTokenAutoRefresh,
   passport.authenticate("jwt", { session: false }),
-  UpdateBook
+  getOrderhistory
 );
 
-router.delete(
-  "/deleteBook",
+router.get(
+  "/getallOrder",
   accessTokenAutoRefresh,
   passport.authenticate("jwt", { session: false }),
-  DeleteBook
+  getAllOders
 );
 
-// Public Routes
-
-router.get("/getAllBooks", GetAllBooks);
-router.get("/recentBooks", GetRecentBooks);
-router.get("/getBookById/:id", GetBookById);
+router.put(
+  "updateOrderStatus",
+  accessTokenAutoRefresh,
+  passport.authenticate("jwt", { session: false }),
+  updateOrderStatus
+);
 
 export default router;
