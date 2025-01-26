@@ -30,7 +30,7 @@ const BookCol = ({ data }) => {
     rating: 4,
   };
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-72">
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col w-72 sm:w-90% md:w-72 lg:w-72 xl:w-72">
       {/* Image Section */}
       <div onClick={handleViewBook} className="relative">
         <img

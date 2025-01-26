@@ -20,6 +20,7 @@ export default {
         "30%": "30%",
         "55%": "55%",
         "45%": "45%",
+        "90%": "90%",
       },
       backgroundImage: {
         homebg: "url('./src/assets/homebg.jpg')",

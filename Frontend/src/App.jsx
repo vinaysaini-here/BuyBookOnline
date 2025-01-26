@@ -11,11 +11,11 @@ import { Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import { useAuthStore } from "./store/useAuthStore";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import AddProduts from "./pages/AddProducts/AddProduts";
 
-import NavBarLogin from "./Components/Navbar/NavBarLogin";
+import NavBar from "./Components/Navbar/NavBar";
 import Profile from "./pages/Profile/Profile";
 import ViewBook from "./pages/ViewBook/ViewBook";
 import AllBooks from "./pages/AllBooks/AllBooks";
@@ -27,6 +27,17 @@ import Cart from "./pages/Cart/Cart";
 import CategoriesPg from "./pages/CategoriesPg/CategoriesPg";
 
 function App() {
+  //   const getUser = useAuthStore((state) => state.getUser);
+
+  //   // Wrap the `getUser` method in `useCallback` to ensure a stable reference
+  //   const fetchUser = React.useCallback(async () => {
+  //     await getUser();
+  //   }, []);
+
+  //   React.useEffect(() => {
+  //     fetchUser(); // Call the wrapped function
+  //   }, [fetchUser]);
+
   return (
     <div>
       <Routes>
@@ -40,7 +51,7 @@ function App() {
         <Route path="/add-new-book" element={<AddProduts />} />
         //new Routes
         <Route path="/contact" element={<Contact />} />
-        <Route path="/navbarlogin" element={<NavBarLogin />} />
+        <Route path="/NavBar" element={<NavBar />} />
         <Route path="/profile" element={<Profile />}>
           <Route index element={<Favourites />} />
           <Route path="/profile/orderhistory" element={<OrderHistory />} />
