@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import assets from "../../assets/assets";
-import NavBarLogin from "../../Components/Navbar/NavBarLogin";
+import NavBar from "../../Components/Navbar/NavBar";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([
@@ -55,7 +55,7 @@ const Cart = () => {
   3;
   return (
     <div>
-      <NavBarLogin />
+      <NavBar />
       <div className="w-full h-[100%] flex justify-center align-middle bg-HomeBgColor">
         <div className="p-8 bg-HomeBgColor min-h-screen w-80vw ml-auto mr-auto">
           <h1 className="text-2xl font-bold mb-6">

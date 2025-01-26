@@ -1,6 +1,6 @@
 import cloudinary from "../config/cloudinary.js";
 import Book from "../models/BooksModel.js";
-import User from "../models/UserModel.js";
+import User from "../models/userModel.js";
 
 export const BookInfo = async (req, res) => {
   const { id } = req.headers;

@@ -1,8 +1,18 @@
 import React from "react";
 import assets from "../../assets/assets";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
+
+  const logoutUser = React.useCallback((e) => {
+    e?.preventDefault();
+    logout();
+    navigate('/');
+  }, []);
+
   return (
     <div className="w-1/4 bg-gray-800 p-6 pb-48 ">
       <div className="flex flex-col items-center">
@@ -33,7 +43,7 @@ const Sidebar = () => {
           Settings
         </Link>
       </div>
-      <button className="w-full mt-12 py-2 bg-red-600 rounded-lg hover:bg-red-700">
+      <button onClick={logoutUser} className="w-full mt-12 py-2 bg-red-600 rounded-lg hover:bg-red-700">
         Log Out
       </button>
     </div>

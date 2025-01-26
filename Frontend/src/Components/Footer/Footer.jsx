@@ -93,12 +93,27 @@ const Footer = () => {
         <span>
           Made with <span className="text-red-500">&#10084;</span> by{" "}
           <a
-            href="#"
+            href="https://github.com/jaiksaini/"
             target="_blank"
             rel="noopener noreferrer"
             className="underline"
           >
-            Jay K.Saini
+            Jay K.Saini{" "}
+          </a>
+          <a
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+              &nbsp; &   &nbsp;
+          </a>
+          <a
+            href="https://github.com/vinaysaini-here/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+           Vinay Saini
           </a>
         </span>
       </div>
