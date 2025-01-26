@@ -8,9 +8,9 @@ const Featured = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/book/getAllBooks");
+        const response = await axios.get("http://localhost:8000/api/book/recentBooks");
         setData(response.data); // Access the "data" property from the response
-        
+
       } catch (error) {
         console.error("Error fetching books:", error);
       }
