@@ -12,6 +12,9 @@ const NavBar = () => {
   const handleHome = () => {
     navigate("/");
   };
+  const handleCart = () => {
+    navigate("/cart");
+  };
   const handleAllbooks = () => {
     navigate("/allbooks");
   };
@@ -20,6 +23,9 @@ const NavBar = () => {
   };
   const handleCategories = () => {
     navigate("/categories");
+  };
+  const handleProfile = () => {
+    navigate("/profile");
   };
   const [MobileNav, setMobileNav] = useState("hidden");
 
@@ -52,6 +58,12 @@ const NavBar = () => {
           >
             Contact
           </p>
+          <p
+            onClick={handleCart}
+            className="cursor-pointer relative hover:after:w-full after:transition-all after:duration-300 after:block after:h-0.5 after:w-0 after:bg-white"
+          >
+            Cart
+          </p>
         </div>
 
         <div className="hidden md:flex items-center space-x-7">
@@ -60,6 +72,13 @@ const NavBar = () => {
             className="bg-secondary text-white w-20 rounded-md border-white p-1 border-2 cursor-pointer hover:text-secondary hover:bg-white hover:font-semibold"
           >
             Sign In
+          </button>
+
+          <button
+            onClick={handleProfile}
+            className="bg-secondary text-white w-20 rounded-md border-white p-1 border-2 cursor-pointer hover:text-blue-500 hover:bg-white hover:font-semibold"
+          >
+            Profile
           </button>
         </div>
 
@@ -104,11 +123,12 @@ const NavBar = () => {
           Sign In
         </button>
         <button
-          onClick={() => handleSignUp()}
-          className="bg-secondary text-white w-full rounded-md border-white p-2 border-2 cursor-pointer hover:text-secondary hover:bg-white hover:font-semibold"
+          onClick={handleProfile}
+          className="bg-secondary text-white w-full rounded-md border-white p-1 border-2 cursor-pointer hover:text-blue-500 hover:bg-white hover:font-semibold"
         >
-          Sign Up
+          Profile
         </button>
+
       </div>
     </div>
   );

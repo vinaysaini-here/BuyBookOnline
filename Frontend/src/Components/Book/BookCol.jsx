@@ -2,19 +2,31 @@ import React from "react";
 import assets from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
 
-const BookCol = () => {
+const BookCol = ({ data }) => {
+  // console.log(data);
+
   const navigate = useNavigate();
+
   const handleViewBook = () => {
     navigate("/viewbook");
   };
   const addToCart = () => {
     alert(`${book.title} item(s) added to the cart.`);
   };
+
+  const formatToRupees = (price) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+    }).format(price);
+  };
+
+
   const book = {
-    title: "Book Name",
-    description: "This is a book that.",
-    price: "$125",
-    image: assets.BookImg,
+    title: data?.title || "Unknown Title",
+    description: data?.description || "No description available.",
+    price: data?.price ? formatToRupees(data.price) : "₹0.00",
+    image: data?.coverImage || assets.BookImg,
     rating: 4,
   };
   return (
@@ -40,9 +52,8 @@ const BookCol = () => {
             {Array.from({ length: 5 }).map((_, i) => (
               <span
                 key={i}
-                className={`text-yellow-400 ${
-                  i < book.rating ? "fill-current" : "opacity-30"
-                }`}
+                className={`text-yellow-400 ${i < book.rating ? "fill-current" : "opacity-30"
+                  }`}
               >
                 ★
               </span>

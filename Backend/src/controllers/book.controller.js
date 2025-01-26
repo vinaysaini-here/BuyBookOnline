@@ -120,7 +120,7 @@ export const GetAllBooks = async (req, res) => {
   try {
     const books = await Book.find().sort({ createdAt: -1 });
 
-    res.status(200).json(books);
+    return res.status(200).json(books);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
