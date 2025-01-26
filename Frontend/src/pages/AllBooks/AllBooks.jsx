@@ -1,9 +1,30 @@
 import React from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import BookCol from "../../Components/Book/BookCol";
 import NavBar from "../../Components/Navbar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 
 const AllBooks = () => {
+
+  const [data, setData] = useState([]); // Initialize as an empty array to avoid `.map` issues
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/book/getAllBooks"
+        );
+
+        setData(response.data); // Access the "data" property from the response
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    fetchBooks();
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       <NavBar />
@@ -17,22 +38,18 @@ const AllBooks = () => {
 
           {/* Books Grid */}
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pt-5">
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
-            <BookCol />
+            {data.length > 0 ? (
+              data.map((item, i) => (
+                <div key={i}>
+                  <BookCol data={item} />
+                </div>
+              ))
+            ) : (
+              <p className="text-center col-span-full">
+                No featured books available
+              </p>
+            )}
+
           </div>
         </div>
       </div>

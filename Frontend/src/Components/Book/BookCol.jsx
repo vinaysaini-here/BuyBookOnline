@@ -3,7 +3,6 @@ import assets from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
 
 const BookCol = ({ data }) => {
-  // console.log(data);
 
   const navigate = useNavigate();
 

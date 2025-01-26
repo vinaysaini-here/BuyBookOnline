@@ -11,7 +11,7 @@ const Featured = () => {
         const response = await axios.get(
           "http://localhost:8000/api/book/recentBooks"
         );
-        console.log(response.data);
+
         setData(response.data); // Access the "data" property from the response
       } catch (error) {
         console.error("Error fetching books:", error);
