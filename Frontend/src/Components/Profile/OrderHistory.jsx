@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const OrderHistory = () => {
   const orders = [
@@ -53,60 +53,60 @@ const OrderHistory = () => {
   ];
   return (
     <div className="w-3/4 p-6">
-    <h1 className="text-2xl font-bold mb-6">Your Order History</h1>
-    <table className="w-full border-collapse border border-gray-700">
-      <thead>
-        <tr className="bg-gray-800">
-          <th className="border border-gray-700 p-2">Sr.</th>
-          <th className="border border-gray-700 p-2">Books</th>
-          <th className="border border-gray-700 p-2">Description</th>
-          <th className="border border-gray-700 p-2">Price</th>
-          <th className="border border-gray-700 p-2">Status</th>
-          <th className="border border-gray-700 p-2">Mode</th>
-        </tr>
-      </thead>
-      <tbody>
-        {orders.map((order, index) => (
-          <tr
-            key={order.id}
-            className={`${
-              order.status === "Canceled"
-                ? "bg-red-200 text-red-700"
-                : index % 2 === 0
-                ? "bg-gray-800"
-                : "bg-gray-700"
-            }`}
-          >
-            <td className="border border-gray-700 p-2 text-center">
-              {index + 1}
-            </td>
-            <td className="border border-gray-700 p-2">{order.book}</td>
-            <td className="border border-gray-700 p-2">
-              {order.description}
-            </td>
-            <td className="border border-gray-700 p-2 text-center">
-              ₹ {order.price}
-            </td>
-            <td
-              className={`border border-gray-700 p-2 text-center ${
-                order.status === "Order placed"
-                  ? "text-green-500"
-                  : order.status === "Out for delivery"
-                  ? "text-yellow-500"
-                  : "text-red-500"
+      <h1 className="text-2xl text-gray-900 font-bold mb-6">Your Order History</h1>
+      <table className="w-full border-collapse border">
+        <thead>
+          <tr className="bg-white text-gray-900 shadow-xl ">
+            <th className="border p-2">Sr.</th>
+            <th className="border p-2">Books</th>
+            <th className="border p-2">Description</th>
+            <th className="border p-2">Price</th>
+            <th className="border p-2">Status</th>
+            <th className="border p-2">Mode</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders.map((order, index) => (
+            <tr
+              key={order.id}
+              className={`${
+                order.status === "Canceled"
+                  ? "bg-red-200 text-red-700"
+                  : index % 2 === 0
+                  ? "bg-gray-100"
+                  : "bg-gray-50"
               }`}
             >
-              {order.status}
-            </td>
-            <td className="border border-gray-700 p-2 text-center">
-              {order.mode}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-  )
-}
+              <td className="border text-gray-800 p-2 text-center">
+                {index + 1}
+              </td>
+              <td className="border text-gray-800 p-2">{order.book}</td>
+              <td className="border text-gray-800 p-2">
+                {order.description}
+              </td>
+              <td className="border text-gray-800 p-2 text-center">
+                ₹ {order.price}
+              </td>
+              <td
+                className={`border p-2 text-center ${
+                  order.status === "Order placed"
+                    ? "text-green-500"
+                    : order.status === "Out for delivery"
+                    ? "text-yellow-500"
+                    : "text-red-500"
+                }`}
+              >
+                {order.status}
+              </td>
+              <td className="border text-gray-800 p-2 text-center">
+                {order.mode}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
-export default OrderHistory
+export default OrderHistory;

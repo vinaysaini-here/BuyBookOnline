@@ -30,9 +30,9 @@ const Setting = () => {
     };
   return (
     <div className="w-3/4 p-6">
-    <h1 className="text-2xl font-bold mb-6">Settings</h1>
-      <div className="w-full max-w-xl p-6 bg-secondaryHover rounded-md shadow-md">
-        <h2 className="text-2xl font-semibold text-center mb-6">Edit Profile</h2>
+    <h1 className="text-2xl font-bold mb-6 text-gray-900">Settings</h1>
+      <div className="w-full max-w-xl p-6 bg-white Hover rounded-md shadow">
+        <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">Edit Profile</h2>
 
         <div className="flex flex-col items-center mb-4">
           <div className="w-24 h-24 rounded-full bg-gray-200 overflow-hidden mb-2">
@@ -63,7 +63,7 @@ const Setting = () => {
             name="name"
             value={profileData.name}
             onChange={handleInputChange}
-            className="mt-1 block w-full px-3 py-2 border bg-secondaryDark border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full px-3 py-2 border text-gray-700 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
 
@@ -74,7 +74,7 @@ const Setting = () => {
             name="email"
             value={profileData.email}
             onChange={handleInputChange}
-            className="mt-1 block w-full px-3 py-2 border bg-secondaryDark border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full px-3 py-2 border text-gray-700 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
 
@@ -84,7 +84,7 @@ const Setting = () => {
             name="address"
             value={profileData.address}
             onChange={handleInputChange}
-            className="mt-1 block w-full px-3 py-2 border bg-secondaryDark border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full px-3 py-2 border text-gray-700 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             rows="3"
           ></textarea>
         </div>
