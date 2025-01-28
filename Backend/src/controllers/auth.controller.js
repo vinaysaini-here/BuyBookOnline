@@ -237,47 +237,47 @@ class UserController {
     }
   };
 
-  static getUserInfo = async(req, res) => {
-    try {
-      const {id} = req.headers;
-      // Find user by email
-      const user = await User.findOne({ id });
-      // Generate tokens
-      const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } =
-        await generateTokens(user);
+  // static getUserInfo = async(req, res) => {
+  //   try {
+  //     const {id} = req.headers;
+  //     // Find user by email
+  //     const user = await User.findOne({ id });
+  //     // Generate tokens
+  //     const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } =
+  //       await generateTokens(user);
 
-      // Set Cookies
-      setTokensCookies(
-        res,
-        accessToken,
-        refreshToken,
-        accessTokenExp,
-        refreshTokenExp
-      );
+  //     // Set Cookies
+  //     setTokensCookies(
+  //       res,
+  //       accessToken,
+  //       refreshToken,
+  //       accessTokenExp,
+  //       refreshTokenExp
+  //     );
 
-      // Send success response with tokens
-      res.status(200).json({
-        user: {
-          id: user._id,
-          email: user.email,
-          name: user.name,
-          role: user.role[0],
-        },
-        status: "success",
-        message: "Get user info successfully",
-        access_token: accessToken,
-        refresh_token: refreshToken,
-        access_token_exp: accessTokenExp,
-        is_auth: true,
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({
-        status: "failed",
-        message: "Internal Server Error",
-      });
-    }
-  };
+  //     // Send success response with tokens
+  //     res.status(200).json({
+  //       user: {
+  //         id: user._id,
+  //         email: user.email,
+  //         name: user.name,
+  //         role: user.role[0],
+  //       },
+  //       status: "success",
+  //       message: "Get user info successfully",
+  //       access_token: accessToken,
+  //       refresh_token: refreshToken,
+  //       access_token_exp: accessTokenExp,
+  //       is_auth: true,
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).json({
+  //       status: "failed",
+  //       message: "Internal Server Error",
+  //     });
+  //   }
+  // };
 
   // Profile OR Logged in User
 

@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import NavBar from "../../Components/Navbar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 import assets from "../../assets/assets";
 import { FaRegHeart } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const BOOKS_DATA = [
   {
@@ -46,6 +50,51 @@ const ViewBook = () => {
     alert(`Added to Favourites.`);
   };
 
+  const formatToRupees = (price) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+    }).format(price);
+  };
+
+
+
+
+
+
+  const { id } = useParams();
+  // console.log("Fetched ID from params:", id);
+
+
+
+
+  const [data, setData] = useState([]); // Initialize as an empty array to avoid `.map` issues
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/book/getBookById/${id}`,
+        );
+        console.log(response);
+
+        setData(response.data); // Access the "data" property from the response
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    fetchBooks();
+
+  }, []);
+
+
+  const book = {
+
+    price: data?.price ? formatToRupees(data.price) : "₹0.00",
+
+  };
+
   return (
     <div>
       <NavBar />
@@ -68,12 +117,14 @@ const ViewBook = () => {
                   </div>
                 );
               })}
+
+
             </div>
             <div className="bg-slate-400 w-full h-full rounded-lg relative flex items-center justify-center">
               <img
-                src={selectedItem.src}
+                src={data.coverImage}
                 alt={`img-id-${selectedItem.id}`}
-                className="absolute h-full m-auto object-cover"
+                className="absolute h-full m-auto object-cover rounded-xl"
               />
             </div>
           </div>
@@ -81,7 +132,7 @@ const ViewBook = () => {
             <div className="flex justify-between flex-col text-black">
               <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-semibold pb-2">
-                  Double Bed & Side Tables
+                  {data.title}
                 </h1>
                 <button
                   onClick={handleFavourites}
@@ -91,20 +142,21 @@ const ViewBook = () => {
                 </button>
               </div>
               <p className="text-2xl text-gray-800 font-semibold mt-2">
-                $54.98
+                {book.price}
               </p>
               <p className="text-sm text-gray-500 mt-1 pb-6">(32 reviews)</p>
               <hr />
               <p className="text-gray-600 mt-6">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                diam nonummy nibh euismod tincidunt ut laoreet dolore magna.
-                diam nonummy nibh euismod tincidunt ut laoreet dolore magna.
+                {data.description}
               </p>
 
               <ul className="list-disc list-inside text-gray-600 mt-4">
-                <li>Lorem ipsum dolor sit amet, adipi scing elit</li>
-                <li>Lorem ipsum dolor sit amet, consectetuer adipi</li>
-                <li>Lorem ipsum dolor sit amet, consectetuer adipi</li>
+              <li>By : {data.author?.name || 'Unknown Author'}</li>
+                <li>Language : {data.language}</li>
+                <li>Category : {data.category}</li>
+                <li>No. of Pages : {data.pages}</li>
+                <li>No. of Copies in Stock : {data.stock}</li>
+                <li> Publication Date : {data.publicationDate}</li>
               </ul>
             </div>
             {/* Extra Information */}

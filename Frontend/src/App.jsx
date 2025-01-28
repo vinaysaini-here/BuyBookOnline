@@ -5,14 +5,12 @@ import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import CodeRecived from "./pages/ForgetPassword/CodeRecived";
 import NewPassword from "./pages/ForgetPassword/NewPassword";
 import VerifyEmail from "./pages/Verification/verifyEmail";
-import { Routes, Route } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import { Toaster } from "react-hot-toast";
-
+import { Loader } from "lucide-react"
 import { useAuthStore } from "./store/useAuthStore";
-import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import React, { useEffect } from "react";
 import AddProduts from "./pages/AddProducts/AddProduts";
 
 import NavBar from "./Components/Navbar/NavBar";
@@ -25,42 +23,49 @@ import Setting from "./Components/Profile/Setting";
 import Contact from "./pages/Contact/Contact";
 import Cart from "./pages/Cart/Cart";
 import CategoriesPg from "./pages/CategoriesPg/CategoriesPg";
+// import { useAuthStore } from "./store/useAuthStore";
+
 
 function App() {
-  //   const getUser = useAuthStore((state) => state.getUser);
 
-  //   // Wrap the `getUser` method in `useCallback` to ensure a stable reference
-  //   const fetchUser = React.useCallback(async () => {
-  //     await getUser();
-  //   }, []);
+  const { user, checkAuth, isCheckingAuth } = useAuthStore();
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth,]);
 
-  //   React.useEffect(() => {
-  //     fetchUser(); // Call the wrapped function
-  //   }, [fetchUser]);
+  console.log(user);
+
+  if (isCheckingAuth && !user) return (
+    <div className='flex items-center justify-center h-screen'>
+      <Loader className="size-10 animate-spin" />
+    </div>
+  )
+
+
 
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<SignIn />} />
+        <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
+        <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/" />} />
+        <Route path="/login" element={!user ? <SignIn /> : <Navigate to="/" />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/forgot-password" element={<ForgetPassword />} />
         <Route path="/CodeRecived" element={<CodeRecived />} />
         <Route path="/newpassword/:id/:token" element={<NewPassword />} />
-        <Route path="/add-new-book" element={<AddProduts />} />
+        <Route path="/add-new-book" element={user ? <AddProduts /> : <Navigate to="/login" />} />
         //new Routes
         <Route path="/contact" element={<Contact />} />
-        <Route path="/NavBar" element={<NavBar />} />
-        <Route path="/profile" element={<Profile />}>
-          <Route index element={<Favourites />} />
-          <Route path="/profile/orderhistory" element={<OrderHistory />} />
-          <Route path="/profile/settings" element={<Setting />} />
+        {/* <Route path="/NavBar" element={<NavBar />} /> */}
+        <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />}>
+          <Route index element={user ? <Favourites /> : <Navigate to="/login" />} />
+          <Route path="/profile/orderhistory" element={user ? <OrderHistory /> : <Navigate to="/login" />} />
+          <Route path="/profile/settings" element={user ? <Setting /> : <Navigate to="/login" />} />
         </Route>
-        <Route path="/viewbook" element={<ViewBook />} />
-        <Route path="/allbooks" element={<AllBooks />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/categories" element={<CategoriesPg />} />
+        <Route path="/viewbook/:id" element={user ? <ViewBook /> : <Navigate to="/login" />} />
+        <Route path="/allbooks" element={user ? <AllBooks /> : <Navigate to="/login" />} />
+        <Route path="/cart" element={user ? <Cart /> : <Navigate to="/login" />} />
+        <Route path="/categories" element={user ? <CategoriesPg /> : <Navigate to="/login" />} />
       </Routes>
       <Toaster />
     </div>

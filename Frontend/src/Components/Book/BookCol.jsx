@@ -7,8 +7,14 @@ const BookCol = ({ data }) => {
   const navigate = useNavigate();
 
   const handleViewBook = () => {
-    navigate("/viewbook");
+    if (data && data._id) {
+      navigate(`/viewbook/${data._id}`); // Replace ":id" with the actual `id` of the book
+    } else {
+      alert("Book ID is missing. Cannot navigate to the book page.");
+    }
   };
+
+
   const addToCart = () => {
     alert(`${book.title} item(s) added to the cart.`);
   };

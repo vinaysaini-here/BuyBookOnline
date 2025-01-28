@@ -3,13 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 
 const NavBar = () => {
-  const user = useAuthStore((state) => state?.user);
+  const { user} = useAuthStore();
   const navigate = useNavigate();
   const handleSignIn = () => {
     navigate("/login");
-  };
-  const handleSignUp = () => {
-    navigate("/signup");
   };
   const handleHome = () => {
     navigate("/");

@@ -19,15 +19,15 @@ router.post("/reset-password/:id/:token", UserController.userPasswordReset);
 
 // router.get("/check-auth",accessTokenAutoRefresh, passport.authenticate("jwt",{session:false}), checkAuth)
 
-router.get(
-  "/user-info",
-  accessTokenAutoRefresh,
-  passport.authenticate("jwt", { session: false }),
-  UserController.getUserInfo
-);
+// router.get(
+//   "/user-info",
+//   accessTokenAutoRefresh,
+//   passport.authenticate("jwt", { session: false }),
+//   UserController.getUserInfo
+// );
 
 router.get(
-  "/",
+  "/check-auth",
   accessTokenAutoRefresh,
   passport.authenticate("jwt", { session: false }),
   UserController.userProfile

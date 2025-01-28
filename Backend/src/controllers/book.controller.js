@@ -141,7 +141,7 @@ export const GetRecentBooks = async (req, res) => {
 export const GetBookById = async (req, res) => {
   try {
     const { id } = req.params;
-    const book = await Book.findById(id);
+    const book = await Book.findById(id).populate("author", "name");
 
     if (!book) {
       return res.status(404).json({ message: "Book not found" });

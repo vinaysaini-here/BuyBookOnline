@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 
-
 // const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:8000" : "/";
 
 export const useAuthStore = create((set, get) => ({
@@ -13,8 +12,21 @@ export const useAuthStore = create((set, get) => ({
   setforgetPasswordEmailCheck: false,
   setnewPassword: false,
   isCheckingAuth: true,
-  accessToken: null,
+  // accessToken: null,
   isAuthenticated: false,
+
+  // Get User Info
+  checkAuth: async () => {
+    try {
+      const res = await axiosInstance.get("/api/user/check-auth");
+      set({ user: res?.data ?? null });
+    } catch (error) {
+      // console.error("Failed to fetch user info:", error);
+      toast.error("Please login to access your Account");
+    } finally {
+      set({ isCheckingAuth: false });
+    }
+  },
 
   // Sign Up
   signup: async (data) => {
@@ -35,7 +47,7 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoggingIn: true });
     try {
       const res = await axiosInstance.post("/api/user/login", data);
-      localStorage.setItem("accessToken", res.data.accessToken); // Save access token
+      // localStorage.setItem("accessToken", res.data.accessToken); // Save access token
       set({ user: res.data });
       toast.success("Logged in successfully");
       return res.data;
@@ -46,47 +58,36 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  // Refresh Token
-  refershUser: async () => {
-    try {
-      const res = await axiosInstance.post("/api/user/refresh-token");
-      const newAccessToken = res.data.accessToken;
+  // // Refresh Token
+  // refershUser: async () => {
+  //   try {
+  //     const res = await axiosInstance.post("/api/user/refresh-token");
+  //     const newAccessToken = res.data.accessToken;
 
-      // Save new access token
-      localStorage.setItem("accessToken", newAccessToken);
+  //     // Save new access token
+  //     localStorage.setItem("accessToken", newAccessToken);
 
-      set({ accessToken: newAccessToken });
+  //     set({ accessToken: newAccessToken });
 
-      // // Fetch user info with the new access token
-      // await get().getUser({ accessToken: newAccessToken });
+  //     // // Fetch user info with the new access token
+  //     // await get().getUser({ accessToken: newAccessToken });
 
-      console.log("Token refreshed successfully.");
-    } catch (error) {
-      console.error("Failed to refresh token:", error);
-      // Redirect to login if token refresh fails
-      localStorage.removeItem("accessToken");
-      set({ user: null });
-      window.location.href = "/login";
-    }
-  },
-
-  // Get User Info
-  getUser: async () => {
-    try {
-      const res = await axiosInstance.get("/api/user/user-info");
-      set({ user: res?.data??null });
-    } catch (error) {
-      console.error("Failed to fetch user info:", error);
-      toast.error("Failed to fetch user info.");
-    }
-  },
+  //     console.log("Token refreshed successfully.");
+  //   } catch (error) {
+  //     console.error("Failed to refresh token:", error);
+  //     // Redirect to login if token refresh fails
+  //     localStorage.removeItem("accessToken");
+  //     set({ user: null });
+  //     window.location.href = "/login";
+  //   }
+  // },
 
   // Logout
   logout: async () => {
     try {
       await axiosInstance.post("/api/user/logout");
-      localStorage.removeItem("accessToken"); // Remove access token
-      set({ user: null, accessToken: null, isAuthenticated: false  });
+      // localStorage.removeItem("accessToken"); // Remove access token
+      set({ user: null, isAuthenticated: false });
       toast.success("Logged out successfully");
       // window.location.href = "/login"; // Redirect to login
     } catch (error) {
