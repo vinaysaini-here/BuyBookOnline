@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
 // const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:8000" : "/";
 
@@ -16,16 +17,9 @@ export const useAuthStore = create((set, get) => ({
   isAuthenticated: false,
 
   // Get User Info
-  checkAuth: async () => {
-    try {
-      const res = await axiosInstance.get("/api/user/check-auth");
-      set({ user: res?.data ?? null });
-    } catch (error) {
-      // console.error("Failed to fetch user info:", error);
-      toast.error("Please login to access your Account");
-    } finally {
-      set({ isCheckingAuth: false });
-    }
+  checkAuth: () => {
+    const isAuth = Cookies.get("is_auth") === "true"; // Check cookie
+    set({ isAuthenticated: isAuth, isCheckingAuth: false });
   },
 
   // Sign Up
@@ -48,7 +42,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post("/api/user/login", data);
       // localStorage.setItem("accessToken", res.data.accessToken); // Save access token
-      set({ user: res.data });
+      set({ user: res.data, isAuthenticated: true });
       toast.success("Logged in successfully");
       return res.data;
     } catch (error) {
