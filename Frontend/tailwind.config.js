@@ -5,11 +5,15 @@ export default {
     extend: {
       height: {
         "93vh": "93vh",
+        "100vh": "100vh",
+        "120vh": "120vh",
         "92vh": "92vh",
+        "91vh": "91vh",
         "7vh": "7vh",
         "30rem": "30rem",
         "30%": "30%",
         "32%": "32%",
+        "40%": "40%",
         "90%": "90%",
       },
       width: {
@@ -53,8 +57,7 @@ export default {
         quinaryHover: "#444C62",
         HomeBgColor: "#F1F3F6",
         headingColor: "#424242",
-      }
-      ,
+      },
       screens: {
         tablet: "640px",
 

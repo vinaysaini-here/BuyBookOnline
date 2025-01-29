@@ -52,7 +52,7 @@ const OrderHistory = () => {
     },
   ];
   return (
-    <div className="w-3/4 p-6">
+    <div className="flex-1 w-3/4 p-6">
       <h1 className="text-2xl text-gray-900 font-bold mb-6">Your Order History</h1>
       <table className="w-full border-collapse border">
         <thead>

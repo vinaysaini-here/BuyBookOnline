@@ -1,38 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Setting = () => {
-    const [profileData, setProfileData] = useState({
-      profilePicture: '',
-      name: 'Vinay',
-      email: 'Vinay@gmail.com',
-      address: 'Ghar',
-    });
-  
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setProfileData({ ...profileData, [name]: value });
-    };
-  
-    const handleProfilePictureChange = (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          setProfileData({ ...profileData, profilePicture: event.target.result });
-        };
-        reader.readAsDataURL(file);
-      }
-    };
-  
-    const saveChanges = () => {
-      alert('Profile updated successfully!');
-      console.log(profileData);
-    };
+  const [profileData, setProfileData] = useState({
+    profilePicture: "",
+    name: "Vinay",
+    email: "Vinay@gmail.com",
+    address: "Ghar",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData({ ...profileData, [name]: value });
+  };
+
+  const handleProfilePictureChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setProfileData({ ...profileData, profilePicture: event.target.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const saveChanges = () => {
+    alert("Profile updated successfully!");
+    console.log(profileData);
+  };
   return (
-    <div className="w-3/4 p-6">
-    <h1 className="text-2xl font-bold mb-6 text-gray-900">Settings</h1>
+    <div className="flex-1 overflow-auto w-3/4 p-6">
+      <h1 className="text-2xl font-bold mb-6 text-gray-900">Settings</h1>
       <div className="w-full max-w-xl p-6 bg-white Hover rounded-md shadow">
-        <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">Edit Profile</h2>
+        <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
+          Edit Profile
+        </h2>
 
         <div className="flex flex-col items-center mb-4">
           <div className="w-24 h-24 rounded-full bg-gray-200 overflow-hidden mb-2">
@@ -57,7 +59,9 @@ const Setting = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Name</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Name
+          </label>
           <input
             type="text"
             name="name"
@@ -68,7 +72,9 @@ const Setting = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Email</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Email
+          </label>
           <input
             type="email"
             name="email"
@@ -79,7 +85,9 @@ const Setting = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Address</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Address
+          </label>
           <textarea
             name="address"
             value={profileData.address}
@@ -99,7 +107,7 @@ const Setting = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Setting
+export default Setting;

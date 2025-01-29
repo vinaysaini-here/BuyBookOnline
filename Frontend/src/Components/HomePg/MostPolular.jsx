@@ -51,7 +51,7 @@ const MostPopular = () => {
         </div>
 
         {/* Books Grid */}
-        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pt-5">
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pt-5 m-auto">
           {data.length > 0 ? (
             data.map((item, i) => (
               <div key={i}>
