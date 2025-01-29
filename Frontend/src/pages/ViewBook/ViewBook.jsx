@@ -23,6 +23,7 @@ const BOOKS_DATA = [
   },
 ];
 const ViewBook = () => {
+  
   const [selectedItem, setSelectedItem] = React.useState(BOOKS_DATA[0]);
 
   const handleClick = React.useCallback((item) => {
@@ -46,8 +47,14 @@ const ViewBook = () => {
   const buyNow = () => {
     alert(`Proceeding to buy ${quantity} item(s).`);
   };
-  const handleFavourites = () => {
-    alert(`Added to Favourites.`);
+  const handleFavourites =  async () => {
+
+    const response = await axios.patch("https://localhost/api/favourites/addBookToFavorite" , {} ,{
+      withCredentials: true,
+    
+    })
+
+    // alert(`Added to Favourites.`);
   };
 
   const formatToRupees = (price) => {

@@ -27,7 +27,7 @@ router.post("/reset-password/:id/:token", UserController.userPasswordReset);
 // );
 
 router.get(
-  "/check-auth",
+  "/user-info",
   accessTokenAutoRefresh,
   passport.authenticate("jwt", { session: false }),
   UserController.userProfile
@@ -45,6 +45,6 @@ router.post(
   UserController.userLogout
 );
 
-router.patch("/update-role/:id", accessTokenAutoRefresh,  UpdateUserRole);
+router.patch("/update-role/:id", accessTokenAutoRefresh, UpdateUserRole);
 
 export default router;

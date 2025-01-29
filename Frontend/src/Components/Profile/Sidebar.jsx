@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import assets from "../../assets/assets";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
+import axios from "axios";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -13,14 +14,34 @@ const Sidebar = () => {
     navigate('/');
   }, []);
 
+  const [data, setData] = useState([]); // Initialize as an empty array to avoid `.map` issues
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/user/user-info", { withCredentials: true }
+        );
+        console.log(response.data);
+
+        setData(response.data.user); // Access the "data" property from the response
+      } catch (error) {
+        console.error("Error fetching User:", error);
+      }
+    };
+
+    fetchBooks();
+  }, []);
+
+
   return (
     <div className="w-1/4 bg-gray-800 p-6 pb-48 ">
       <div className="flex flex-col items-center">
         <div className="w-24 h-24 bg-blue-500 rounded-full">
           <img src={assets.user_img} alt="" />
         </div>
-        <h2 className="mt-4 text-xl font-bold">Vinay</h2>
-        <p className="text-sm pt-1 pb-7 text-gray-400">Vinay@gmail.com</p>
+        <h2 className="mt-4 text-xl font-bold">{data.name}</h2>
+        <p className="text-sm pt-1 pb-7 text-gray-400">{data.email}</p>
       </div>
       <hr />
       <div className="mt-12 space-y-8 text-lg flex items-center flex-col">

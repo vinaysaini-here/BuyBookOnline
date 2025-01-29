@@ -124,7 +124,7 @@ function App() {
         <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}>
           <Route index element={<Favourites />} />
           <Route path="/profile/orderhistory" element={<OrderHistory />} />
-          <Route path="/profile/settings" element={<Setting />} />
+          <Route path="/profile/settings" element={isAuthenticated? <Setting /> : <Navigate to = "/login"/>} />
         </Route>
         <Route path="/viewbook/:id" element={isAuthenticated ? <ViewBook /> : <Navigate to="/login" />} />
         <Route path="/allbooks" element={isAuthenticated ? <AllBooks /> : <Navigate to="/login" />} />
