@@ -7,8 +7,8 @@ const Profile = () => {
   return (
     <div>
       <NavBar />
-      <div className="w-full h-[100%] flex justify-center align-middle">
-        <div className="w-85vw h-full flex flex-row justify-center bg-gray-900">
+      <div className="w-full h-[100%] flex justify-center align-middle bg-HomeBgColor">
+        <div className="w-85vw h-full flex flex-row justify-center shadow-lg bg-white">
           <Sidebar />
           <Outlet />
         </div>
