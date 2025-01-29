@@ -23,7 +23,7 @@ const BOOKS_DATA = [
   },
 ];
 const ViewBook = () => {
-  
+
   const [selectedItem, setSelectedItem] = React.useState(BOOKS_DATA[0]);
 
   const handleClick = React.useCallback((item) => {
@@ -47,15 +47,7 @@ const ViewBook = () => {
   const buyNow = () => {
     alert(`Proceeding to buy ${quantity} item(s).`);
   };
-  const handleFavourites =  async () => {
 
-    const response = await axios.patch("https://localhost/api/favourites/addBookToFavorite" , {} ,{
-      withCredentials: true,
-    
-    })
-
-    // alert(`Added to Favourites.`);
-  };
 
   const formatToRupees = (price) => {
     return new Intl.NumberFormat("en-IN", {
@@ -94,6 +86,26 @@ const ViewBook = () => {
     fetchBooks();
 
   }, []);
+
+
+  const handleFavourites = async () => {
+    try {
+      await axios.patch(
+        "http://localhost:8000/api/favorites/addBookToFavorite",
+        {},
+        {
+          headers: {
+            bookid: id, // Using the book ID from useParams
+            id: "6794b8c00a5a3c5755a95b94", // Replace with the actual user ID (e.g., from auth state)
+          },
+          withCredentials: true, // Ensures authentication tokens are sent
+        }
+      );
+      alert("Added to Favourites.");
+    } catch (error) {
+      console.error("Error adding to favourites:", error.response?.data?.message || "Something went wrong");
+    }
+  };
 
 
   const book = {
@@ -158,7 +170,7 @@ const ViewBook = () => {
               </p>
 
               <ul className="list-disc list-inside text-gray-600 mt-4">
-              <li>By : {data.author?.name || 'Unknown Author'}</li>
+                <li>By : {data.author?.name || 'Unknown Author'}</li>
                 <li>Language : {data.language}</li>
                 <li>Category : {data.category}</li>
                 <li>No. of Pages : {data.pages}</li>
