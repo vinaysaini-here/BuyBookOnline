@@ -17,7 +17,7 @@ const Sidebar = () => {
   const [data, setData] = useState([]); // Initialize as an empty array to avoid `.map` issues
 
   useEffect(() => {
-    const fetchBooks = async () => {
+    const fetchUser = async () => {
       try {
         const response = await axios.get(
           "http://localhost:8000/api/user/user-info", { withCredentials: true }
@@ -30,7 +30,7 @@ const Sidebar = () => {
       }
     };
 
-    fetchBooks();
+    fetchUser();
   }, []);
 
 

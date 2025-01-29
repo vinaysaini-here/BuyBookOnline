@@ -40,9 +40,7 @@ const ViewBook = () => {
     });
   };
 
-  const addToCart = () => {
-    alert(`${quantity} item(s) added to the cart.`);
-  };
+
 
   const buyNow = () => {
     alert(`Proceeding to buy ${quantity} item(s).`);
@@ -107,6 +105,25 @@ const ViewBook = () => {
     }
   };
 
+
+  const addToCart =  async () => {
+    try {
+      await axios.patch(
+        "http://localhost:8000/api/cart/addBookToCart",
+        {},
+        {
+          headers: {
+            bookid: id, // Using the book ID from useParams
+            id: "6794b8c00a5a3c5755a95b94", // Replace with the actual user ID (e.g., from auth state)
+          },
+          withCredentials: true, // Ensures authentication tokens are sent
+        }
+      );
+      alert("Added to Cart.");
+    } catch (error) {
+      console.error("Error adding to Cart:", error.response?.data?.message || "Something went wrong");
+    }
+  };
 
   const book = {
 
