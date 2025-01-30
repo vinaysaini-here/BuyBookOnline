@@ -21,7 +21,7 @@ const colors = {
 
 
 
-const signup = () => {
+const SignUp = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -162,4 +162,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default SignUp;

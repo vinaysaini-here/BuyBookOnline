@@ -131,6 +131,7 @@ class UserController {
   static userLogin = async (req, res) => {
     try {
       const { email, password } = req.body;
+  
       // Check if email and password are provided
       if (!email || !password) {
         return res.status(400).json({
@@ -140,33 +141,36 @@ class UserController {
       }
       // Find user by email
       const user = await User.findOne({ email });
-
+  
       // Check if user exists
       if (!user) {
-        return res
-          .status(404)
-          .json({ status: "failed", message: "Invalid Email or Password" });
+        return res.status(401).json({
+          status: "failed",
+          message: "Invalid email or password",
+        });
       }
-
-      // Check if user exists
+  
+      // Check if the user's account is verified
       if (!user.is_verified) {
-        return res
-          .status(401)
-          .json({ status: "failed", message: "Your account is not verified" });
+        return res.status(403).json({
+          status: "failed",
+          message: "Your account is not verified. Please check your email.",
+        });
       }
-
+  
       // Compare passwords / Check Password
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res
-          .status(401)
-          .json({ status: "failed", message: "Invalid email or password" });
+        return res.status(401).json({
+          status: "failed",
+          message: "Invalid email or password",
+        });
       }
-
+  
       // Generate tokens
       const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } =
         await generateTokens(user);
-
+  
       // Set Cookies
       setTokensCookies(
         res,
@@ -182,23 +186,27 @@ class UserController {
           id: user._id,
           email: user.email,
           name: user.name,
-          role: user.role[0],
+          role: Array.isArray(user?.role) ?  user.role[0] : user.role,  // assuming it's an array of roles
         },
         status: "success",
         message: "Login successful",
         access_token: accessToken,
         refresh_token: refreshToken,
         access_token_exp: accessTokenExp,
+        refresh_token_exp: refreshTokenExp,  // Consider returning the expiration of the refresh token as well
         is_auth: true,
       });
     } catch (error) {
-      console.error(error);
+      console.error("Login error:", error);
+  
+      // Specific error message based on different error types can be added here
       res.status(500).json({
         status: "failed",
         message: "Unable to login, please try again later",
       });
     }
   };
+  
 
   // Get New Access Token OR Refresh Token
 
@@ -282,6 +290,7 @@ class UserController {
   // Profile OR Logged in User
 
   static userProfile = async (req, res) => {
+    console.log(req.user)
     res.send({ user: req.user });
   };
 
@@ -838,21 +847,32 @@ class UserController {
   // Logout
   static userLogout = async (req, res) => {
     try {
-      // Optionally, you can blacklist the refresh token in the database
       const refreshToken = req.cookies.refreshToken;
-      await UserRefreshTokenModel.findOneAndUpdate(
-        { token: refreshToken },
-        { $set: { blacklisted: true } }
-      );
+      
+      // If there's no refresh token, the user is not logged in, so we can return a response
+      if (!refreshToken) {
+        return res.status(400).json({ status: "failed", message: "No refresh token found, user might already be logged out." });
+      }
+
+      // Optionally, blacklist the refresh token in the database
+      const userRefreshToken = await UserRefreshTokenModel.findOne({ token: refreshToken });
+
+      if (userRefreshToken) {
+        // Blacklist the refresh token
+        userRefreshToken.blacklisted = true;
+        await userRefreshToken.save();
+      } else {
+        console.log('Refresh token not found in database for blacklisting.');
+      }
 
       // Clear access token and refresh token cookies
-      res.clearCookie("accessToken");
-      res.clearCookie("refreshToken");
-      res.clearCookie("is_auth");
+      res.clearCookie("accessToken", { path: "/" }); // Specify path if necessary
+      res.clearCookie("refreshToken", { path: "/" }); // Specify path if necessary
+      res.clearCookie("is_auth", { path: "/" }); // Specify path if necessary
 
       res.status(200).json({ status: "success", message: "Logout successful" });
     } catch (error) {
-      console.error(error);
+      console.error("Logout error:", error);
       res.status(500).json({
         status: "failed",
         message: "Unable to logout, please try again later",
