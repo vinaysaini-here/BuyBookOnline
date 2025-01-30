@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 
 export const useAuthStore = create((set, get) => ({
   user: null,
+  isfetchingUser: false,
   isSigningUp: false,
   isLoggingIn: false,
   setotp: false,
@@ -16,10 +17,31 @@ export const useAuthStore = create((set, get) => ({
   // accessToken: null,
   isAuthenticated: false,
 
-  // Get User Info
-  checkAuth: () => {
+  // Check Authentication status based on cookies
+  checkAuth: async () => {
+    // Check if the user is authenticated by looking at the 'is_auth' cookie
     const isAuth = Cookies.get("is_auth") === "true"; // Check cookie
     set({ isAuthenticated: isAuth, isCheckingAuth: false });
+    if (isAuth) {// Fetch user data if authenticated
+      await get().fetchUser();
+    } else {
+      set({ user: null });
+    }
+  },
+
+  // Fetch User Info
+  fetchUser: async () => {
+    try {
+      set({ isfetchingUser: true });
+      const response = await axiosInstance.get("/api/user/user-info", { withCredentials: true });
+      const userData = response.data?.user;
+      set({ user:  {...userData, id: userData?._id} });  // Set user info to Zustand store
+    } catch (error) {
+      console.error("Error fetching User:", error);
+      toast.error("Failed to fetch user info.");
+    } finally {
+      set({ isfetchingUser: false });
+    }
   },
 
   // Sign Up
@@ -40,10 +62,16 @@ export const useAuthStore = create((set, get) => ({
   login: async (data) => {
     set({ isLoggingIn: true });
     try {
-      const res = await axiosInstance.post("/api/user/login", data);
-      // localStorage.setItem("accessToken", res.data.accessToken); // Save access token
-      set({ user: res.data, isAuthenticated: true });
-      toast.success("Logged in successfully");
+      const res = await axiosInstance.post("/api/user/login", data, { withCredentials: true });
+      
+      // Check if the 'is_auth' cookie is set
+      if (Cookies.get("is_auth") === "true") {
+        set({ user: res.data?.user, isAuthenticated: true });
+        toast.success("Logged in successfully");
+      } else {
+        set({ isAuthenticated: false });
+      }
+
       return res.data;
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to log in.");
@@ -51,6 +79,7 @@ export const useAuthStore = create((set, get) => ({
       set({ isLoggingIn: false });
     }
   },
+
 
   // // Refresh Token
   // refershUser: async () => {
@@ -79,11 +108,16 @@ export const useAuthStore = create((set, get) => ({
   // Logout
   logout: async () => {
     try {
-      await axiosInstance.post("/api/user/logout");
-      // localStorage.removeItem("accessToken"); // Remove access token
+      await axiosInstance.post("/api/user/logout", {}, { withCredentials: true });
+      
+      // Remove cookies related to authentication
+      Cookies.remove("is_auth");
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+
+      // Reset authentication state in Zustand
       set({ user: null, isAuthenticated: false });
       toast.success("Logged out successfully");
-      // window.location.href = "/login"; // Redirect to login
     } catch (error) {
       console.error("Logout failed:", error);
       toast.error("Failed to log out.");

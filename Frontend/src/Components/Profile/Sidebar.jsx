@@ -6,7 +6,7 @@ import axios from "axios";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const logout = useAuthStore((state) => state.logout);
+  const {logout, user, isfetchingUser, fetchUser} = useAuthStore((state) => state);
 
   const logoutUser = React.useCallback((e) => {
     e?.preventDefault();
@@ -14,22 +14,7 @@ const Sidebar = () => {
     navigate('/');
   }, []);
 
-  const [data, setData] = useState([]); // Initialize as an empty array to avoid `.map` issues
-
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8000/api/user/user-info", { withCredentials: true }
-        );
-        console.log(response.data);
-
-        setData(response.data.user); // Access the "data" property from the response
-      } catch (error) {
-        console.error("Error fetching User:", error);
-      }
-    };
-
     fetchUser();
   }, []);
 
@@ -40,8 +25,8 @@ const Sidebar = () => {
         <div className="w-24 h-24 bg-blue-500 rounded-full">
           <img src={assets.user_img} alt="" />
         </div>
-        <h2 className="mt-4 text-xl font-bold text-slate-900">{data.name}</h2>
-        <p className="text-sm pt-1 pb-7 text-slate-800">{data.email}</p>
+        <h2 className="mt-4 text-xl font-bold text-slate-900">{user?.name}</h2>
+        <p className="text-sm pt-1 pb-7 text-slate-800">{user?.email}</p>
       </div>
       <hr />
       <div className="mt-12 space-y-8 text-lg flex items-center flex-col">
