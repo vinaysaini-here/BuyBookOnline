@@ -56,4 +56,4 @@ const axiosInstance = axios.create({
 //   }
 // );
 
-export { axiosInstance }
+export { axiosInstance };

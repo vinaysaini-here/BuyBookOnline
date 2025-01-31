@@ -10,14 +10,22 @@ const generateTokens = async (user) => {
     const payload = { _id: user._id, roles: user.roles };
 
     // Generate access token with expiration time (let's set it to 15 minutes as an example)
-    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_TOKEN_SECRET_KEY, {
-      expiresIn: "15m", // Set expiration to 15 minutes
-    });
+    const accessToken = jwt.sign(
+      payload,
+      process.env.JWT_ACCESS_TOKEN_SECRET_KEY,
+      {
+        expiresIn: "30d", // Set expiration to 15 minutes
+      }
+    );
 
     // Generate refresh token with expiration time (let's set it to 5 days)
-    const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_TOKEN_SECRET_KEY, {
-      expiresIn: "5d", // Set expiration to 5 days
-    });
+    const refreshToken = jwt.sign(
+      payload,
+      process.env.JWT_REFRESH_TOKEN_SECRET_KEY,
+      {
+        expiresIn: "30d", // Set expiration to 5 days
+      }
+    );
 
     // Remove any existing refresh token for the user from the database
     await UserRefreshTokenModel.findOneAndDelete({ userId: user._id });

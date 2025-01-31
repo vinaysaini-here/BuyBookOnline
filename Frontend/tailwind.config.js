@@ -5,6 +5,7 @@ export default {
     extend: {
       height: {
         "93vh": "93vh",
+        "90vh": "90vh",
         "100vh": "100vh",
         "120vh": "120vh",
         "92vh": "92vh",
@@ -18,6 +19,7 @@ export default {
       },
       width: {
         "85vw": "85vw",
+        "90vw": "90vw",
         "80vw": "80vw",
         "100vw": "100vw",
         "99vw": "99vw",
