@@ -4,6 +4,7 @@ import Footer from "../../Components/Footer/Footer";
 import assets from "../../assets/assets";
 import { FaRegHeart } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import { toast } from "react-hot-toast"
 
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -88,7 +89,7 @@ const ViewBook = () => {
           withCredentials: true, // Ensures authentication tokens are sent
         }
       );
-      alert("Added to Favourites.");
+      toast.success("Added to Favourites.")
     } catch (error) {
       console.error(
         "Error adding to favourites:",
@@ -110,7 +111,7 @@ const ViewBook = () => {
           withCredentials: true, // Ensures authentication tokens are sent
         }
       );
-      alert("Added to Cart.");
+      toast.success(`${data.title} Added to Cart.`)
     } catch (error) {
       console.error(
         "Error adding to Cart:",

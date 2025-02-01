@@ -3,6 +3,8 @@ import assets from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useFavouriteStore } from "../../store/useFavouriteStore";
+import { toast } from 'react-hot-toast'; // Import toast
+import axios  from "axios";
 
 const BookCol = ({ data, Favourite }) => {
   const { user } = useAuthStore();
@@ -26,11 +28,30 @@ const BookCol = ({ data, Favourite }) => {
     }
 
     await removeFavorite(data._id, user._id); // Call Zustand store function
-    alert("Removed from Favourites.");
+    toast.success("Removed from Favourites.");
   };
 
-  const addToCart = () => {
-    alert(`${book.title} item(s) added to the cart.`);
+  const addToCart = async () => {
+
+    try {
+      await axios.patch(
+        "http://localhost:8000/api/cart/addBookToCart",
+        {},
+        {
+          headers: {
+            bookid: data._id, // Using the book ID from useParams
+            id: user._id, // Replace with the actual user ID (e.g., from auth state)
+          },
+          withCredentials: true, // Ensures authentication tokens are sent
+        }
+      );
+      toast.success(`${data.title} Added to Cart.`)
+    } catch (error) {
+      console.error(
+        "Error adding to Cart:",
+        error.response?.data?.message || "Something went wrong"
+      );
+    }
   };
 
   const formatToRupees = (price) => {
@@ -82,6 +103,7 @@ const BookCol = ({ data, Favourite }) => {
         {/* Add to Cart Button */}
         <button onClick={addToCart} className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded-md">
           Add to Cart
+          
         </button>
 
         {/* Remove from Favorites Button */}

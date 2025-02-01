@@ -18,7 +18,7 @@ router.patch(
 );
 
 router.patch(
-  "/removeBookFromCart",
+  "/removeBookFromCart/:bookid",
   accessTokenAutoRefresh,
   passport.authenticate("jwt", { session: false }),
   removeBookfromCart

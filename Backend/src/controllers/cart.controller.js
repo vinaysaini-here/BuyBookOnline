@@ -20,7 +20,8 @@ export const AddToCart = async (req, res, next) => {
 
 export const removeBookfromCart = async (req, res) => {
   try {
-    const { bookid, id } = req.headers;
+    const { bookid} = req.params;
+    const {  id } = req.headers;
     const user = await User.findById(id);
     // it check if book is already in favorites or not
     const isBookInCart = user.cart.includes(bookid);
