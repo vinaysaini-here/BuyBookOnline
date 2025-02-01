@@ -1,31 +1,43 @@
 import React, { useEffect, useState } from "react";
 import BookCol from "../Book/BookCol";
 import axios from "axios";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const Favourites = () => {
+  const { user } = useAuthStore();
   const [data, setData] = useState([]); // Initialize as an empty array to avoid `.map` issues
 
   useEffect(() => {
     const fetchFavourite = async () => {
+      if (!user || !user._id) {
+        // console.error("User is not available or missing _id");
+        return; // Stop execution if user is null
+      }
+
+      console.log("Fetching favourites for user:", user._id);
+
       try {
         const response = await axios.get(
           "http://localhost:8000/api/favorites/getFavoriteBooks",
           {
             headers: {
-              id: "6794b8c00a5a3c5755a95b94", // Replace with the actual user ID (e.g., from auth state)
+              id: user._id, // Ensure only _id is passed
             },
             withCredentials: true,
           }
         );
-        console.log(response.data);
-        setData(response.data); // Access the "data" property from the response
+
+        // console.log("Fetched favourites:", response.data.data);
+        setData(response.data.data);
       } catch (error) {
-        console.error("Error fetching favourate books:", error);
+        console.error("Error fetching favourite books:", error);
       }
     };
 
-    fetchFavourite();
-  }, []);
+    if (user) {
+      fetchFavourite(); // Call function only when user is available
+    }
+  }, [ user]); // Re-run when user changes
 
   return (
     <>
@@ -35,12 +47,12 @@ const Favourites = () => {
           {data.length > 0 ? (
             data.map((item, i) => (
               <div key={i}>
-                <BookCol data={item} />
+                <BookCol data={item} Favourite = {true}/>
               </div>
             ))
           ) : (
             <p className="text-center col-span-full">
-              No Favourate books available
+              No Favourite books available
             </p>
           )}
         </div>
@@ -56,7 +68,7 @@ const Favourites = () => {
             ))
           ) : (
             <p className="text-center col-span-full">
-              No Favourate books available
+              No Favourite books available
             </p>
           )}
         </div>

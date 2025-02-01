@@ -1,8 +1,11 @@
 import React from "react";
 import assets from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuthStore } from "../../store/useAuthStore";
 
-const BookCol = ({ data }) => {
+const BookCol = ({ data , Favourite }) => {
+    const { user } = useAuthStore();
 
   const navigate = useNavigate();
 
@@ -12,6 +15,18 @@ const BookCol = ({ data }) => {
     } else {
       alert("Book ID is missing. Cannot navigate to the book page.");
     }
+  };
+
+  const handleRemoveFavourite =async () => {
+    const response = await axios.put("http://localhost:8000/api/favorites/removeBookToFavorite",   {},
+      {
+        headers: {
+          bookid: data._id, // Using the book ID from useParams
+          id: user._id, // Replace with the actual user ID (e.g., from auth state)
+        },
+        withCredentials: true, // Ensures authentication tokens are sent
+      })
+      alert("Removed from Favourites.");
   };
 
 
@@ -70,6 +85,11 @@ const BookCol = ({ data }) => {
         <button onClick={addToCart} className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded-md">
           Add to Cart
         </button>
+        {Favourite && (    <button
+          onClick={handleRemoveFavourite}
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-md mt-2"
+        >Remove From Favourate</button>)}
+    
       </div>
     </div>
   );

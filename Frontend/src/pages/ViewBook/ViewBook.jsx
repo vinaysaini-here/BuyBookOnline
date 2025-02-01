@@ -8,6 +8,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
+import { useAuthStore } from "../../store/useAuthStore";
+
 const BOOKS_DATA = [
   {
     id: 1,
@@ -23,6 +25,7 @@ const BOOKS_DATA = [
   },
 ];
 const ViewBook = () => {
+  const { user } = useAuthStore();
   const [selectedItem, setSelectedItem] = React.useState(BOOKS_DATA[0]);
 
   const handleClick = React.useCallback((item) => {
@@ -80,7 +83,7 @@ const ViewBook = () => {
         {
           headers: {
             bookid: id, // Using the book ID from useParams
-            id: "6794b8c00a5a3c5755a95b94", // Replace with the actual user ID (e.g., from auth state)
+            id: user._id, // Replace with the actual user ID (e.g., from auth state)
           },
           withCredentials: true, // Ensures authentication tokens are sent
         }
@@ -102,7 +105,7 @@ const ViewBook = () => {
         {
           headers: {
             bookid: id, // Using the book ID from useParams
-            id: "6794b8c00a5a3c5755a95b94", // Replace with the actual user ID (e.g., from auth state)
+            id: user._id, // Replace with the actual user ID (e.g., from auth state)
           },
           withCredentials: true, // Ensures authentication tokens are sent
         }
@@ -316,5 +319,6 @@ const ViewBook = () => {
     </div>
   );
 };
+
 
 export default ViewBook;

@@ -14,7 +14,7 @@ const generateTokens = async (user) => {
       payload,
       process.env.JWT_ACCESS_TOKEN_SECRET_KEY,
       {
-        expiresIn: "30d", // Set expiration to 15 minutes
+        expiresIn: "30d", // Set expiration to 30 days
       }
     );
 
@@ -23,7 +23,7 @@ const generateTokens = async (user) => {
       payload,
       process.env.JWT_REFRESH_TOKEN_SECRET_KEY,
       {
-        expiresIn: "30d", // Set expiration to 5 days
+        expiresIn: "30d", // Set expiration to 30 days
       }
     );
 
