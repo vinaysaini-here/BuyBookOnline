@@ -42,5 +42,12 @@ export const useCartStore = create((set) => ({
       console.error("Error removing item:", error);
       toast.error("Failed to remove item");
     }
+  },
+
+  clearCartAfterOrder : async () => {
+    set({ cartItems: [] });  // Empty cart in UI
   }
 }));
+
+
+

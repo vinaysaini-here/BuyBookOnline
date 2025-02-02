@@ -4,9 +4,10 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { useCartStore } from "../../store/useCartStore";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const Cart = () => {
   const { user } = useAuthStore();
-  const { cartItems, fetchCart, removeItem } = useCartStore();
+  const { cartItems, fetchCart, removeItem  ,clearCartAfterOrder} = useCartStore();
   const [total, setTotal] = useState(0);
   const navigate = useNavigate();
 
@@ -20,6 +21,25 @@ const Cart = () => {
     const newTotal = cartItems.reduce((acc, item) => acc + item.price, 0);
     setTotal(newTotal);
   }, [cartItems]);
+
+
+  const PlaceOrder = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/order/placeOrder",
+        { order: cartItems },
+        { headers: { id: user._id }, withCredentials: true }
+      );
+      
+      toast.success("Order placed successfully!");
+      clearCartAfterOrder(); // Clear cart after successful order
+      navigate("/profile/orderhistory");
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Failed to place order. Please try again later.");
+    }
+  }
 
   return (
     <div>
@@ -85,7 +105,7 @@ const Cart = () => {
                 <span>Total</span>
                 <span>₹{total}</span>
               </div>
-              <button onClick={() => alert("Proceeding to checkout...")}
+              <button onClick={PlaceOrder}
                 className="mt-6 w-full px-4 py-2 sm:px-6 sm:py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600"
               >
                 Proceed to Checkout
