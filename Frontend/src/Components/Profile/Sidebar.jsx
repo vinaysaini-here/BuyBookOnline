@@ -71,8 +71,15 @@ const Sidebar = () => {
       <div className="w-full block sm:hidden bg-gray-50 p-4  ">
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center">
-            <div className="w-16 h-16 bg-blue-500 rounded-full">
-              <img src={assets.user_img} alt="" />
+            <div 
+            // className="w-16 h-16 bg-blue-500 rounded-full"
+            >
+            <img
+              src={user?.profilePic || "/avatar.png"}
+              alt="Profile"
+              className="size-20 rounded-full object-cover border-4 "
+
+            />
             </div>
             <div className="ml-4">
               <h2 className="mt-4 text-xl font-bold text-slate-900">
