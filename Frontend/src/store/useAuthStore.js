@@ -16,6 +16,7 @@ export const useAuthStore = create((set, get) => ({
   isCheckingAuth: true,
   // accessToken: null,
   isAuthenticated: false,
+  isUpdatingProfile: false,
 
   // Check Authentication status based on cookies
   checkAuth: async () => {
@@ -81,29 +82,6 @@ export const useAuthStore = create((set, get) => ({
   },
 
 
-  // // Refresh Token
-  // refershUser: async () => {
-  //   try {
-  //     const res = await axiosInstance.post("/api/user/refresh-token");
-  //     const newAccessToken = res.data.accessToken;
-
-  //     // Save new access token
-  //     localStorage.setItem("accessToken", newAccessToken);
-
-  //     set({ accessToken: newAccessToken });
-
-  //     // // Fetch user info with the new access token
-  //     // await get().getUser({ accessToken: newAccessToken });
-
-  //     console.log("Token refreshed successfully.");
-  //   } catch (error) {
-  //     console.error("Failed to refresh token:", error);
-  //     // Redirect to login if token refresh fails
-  //     localStorage.removeItem("accessToken");
-  //     set({ user: null });
-  //     window.location.href = "/login";
-  //   }
-  // },
 
   // Logout
   logout: async () => {
@@ -158,4 +136,22 @@ export const useAuthStore = create((set, get) => ({
       toast.error(error.response?.data?.message || "Failed to reset password.");
     }
   },
+
+  updateProfile: async (data) => {
+    set({ isUpdatingProfile: true });
+    try {
+      const res = await axiosInstance.put("/api/user/update-profile", data);
+      set({ user: res.data });
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      console.log("error in update profile:", error);
+      toast.error(error.response.data.message);
+    } finally {
+      set({ isUpdatingProfile: false });
+    }
+  },
+
+
+
+
 }));

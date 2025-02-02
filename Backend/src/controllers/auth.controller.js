@@ -8,6 +8,7 @@ import refreshAccessToken from "../utils/refreshAccessToken.js";
 import UserRefreshTokenModel from "../models/UserRefreshToken.js";
 import jwt from "jsonwebtoken";
 import transporter from "../config/emailConfig.js";
+import cloudinary from "../config/cloudinary.js"
 
 class UserController {
   // User Registration
@@ -906,6 +907,29 @@ export const UpdateUserRole = async (req, res) => {
     });
   }
 };
+
+
+export const updateProfile = async (req , res)=>{
+  try {
+      const {profilePic} = req.body;
+      const userId = req.user._id
+
+      if(!profilePic){
+          res.status(400).json({message:"Profile pic is Required"});
+      }
+
+      const uploadResponse = await cloudinary.uploader.upload(profilePic)
+      const updatedUser = await User.findByIdAndUpdate(userId,{profilePic:uploadResponse.secure_url},{new:true})
+
+      res.status(200).json(updatedUser)
+
+  } catch (error) {
+      console.log("error in updating profile", error);
+      
+      res.status(400).json({message:"Internal server Error"});
+  }
+}
+
 
 
 

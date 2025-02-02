@@ -1,9 +1,9 @@
 import express from "express";
 const router = express.Router();
 import UserController, {
-  UpdateUserRole,
+  UpdateUserRole, updateProfile
 } from "../controllers/auth.controller.js";
-import passport from "passport";
+import passport  from "passport";
 
 import accessTokenAutoRefresh from "../middlewares/accessTokenAutoRefresh.js";
 
@@ -46,5 +46,7 @@ router.post(
 );
 
 router.patch("/update-role/:id", accessTokenAutoRefresh, UpdateUserRole);
+
+router.put("/update-profile", accessTokenAutoRefresh , passport.authenticate("jwt", { session: false }), updateProfile);
 
 export default router;
