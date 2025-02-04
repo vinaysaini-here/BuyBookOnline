@@ -96,12 +96,15 @@ import AllBooks from "./pages/AllBooks/AllBooks";
 import Favourites from "./Components/Profile/Favourites";
 import OrderHistory from "./Components/Profile/OrderHistory";
 import Setting from "./Components/Profile/Setting";
+import AllOrders from "./Components/Profile/AllOrders";
 import Contact from "./pages/Contact/Contact";
 import Cart from "./pages/Cart/Cart";
 import CategoriesPg from "./pages/CategoriesPg/CategoriesPg";
+import UpdateBook from "./pages/UpdateBook/updateBook";
 
 function App() {
-  const { checkAuth, isCheckingAuth, isAuthenticated } = useAuthStore();
+  const { checkAuth, isCheckingAuth, isAuthenticated , user } = useAuthStore();
+  const role = user?.role;
 
   useEffect(() => {
     checkAuth(); // Check authentication on app load
@@ -120,14 +123,15 @@ function App() {
       <Routes>
         {/* Protected Routes */}
         <Route path="/" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
-        <Route path="/add-new-book" element={isAuthenticated ? <AddProducts /> : <Navigate to="/login" />} />
+        {role === "author" && <Route path="/add-new-book" element={isAuthenticated ? <AddProducts /> : <Navigate to="/login" />} />}
         <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}>
-          <Route index element={<Favourites />} />
+        { role ==="user" ? <Route index element={<Favourites />} />  : <Route index element = {<AllOrders />}/>}
           <Route path="/profile/orderhistory" element={<OrderHistory />} />
           <Route path="/profile/settings" element={isAuthenticated? <Setting /> : <Navigate to = "/login"/>} />
         </Route>
         <Route path="/viewbook/:id" element={isAuthenticated ? <ViewBook /> : <Navigate to="/login" />} />
         <Route path="/allbooks" element={isAuthenticated ? <AllBooks /> : <Navigate to="/login" />} />
+        <Route path="/updatebook/:id" element={isAuthenticated ? <UpdateBook /> : <Navigate to="/login" />} />
         <Route path="/cart" element={isAuthenticated ? <Cart /> : <Navigate to="/login" />} />
         <Route path="/categories" element={isAuthenticated ? <CategoriesPg /> : <Navigate to="/login" />} />
 

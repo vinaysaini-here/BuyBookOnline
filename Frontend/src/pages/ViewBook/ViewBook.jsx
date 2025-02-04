@@ -2,7 +2,10 @@ import React from "react";
 import NavBar from "../../Components/Navbar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 import assets from "../../assets/assets";
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart, FaEdit } from "react-icons/fa";
+import { MdOutlineDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
+
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast"
 
@@ -10,7 +13,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 import { useAuthStore } from "../../store/useAuthStore";
-
+import { useNavigate } from "react-router-dom";
 const BOOKS_DATA = [
   {
     id: 1,
@@ -28,20 +31,22 @@ const BOOKS_DATA = [
 const ViewBook = () => {
   const { user } = useAuthStore();
   const [selectedItem, setSelectedItem] = React.useState(BOOKS_DATA[0]);
+  const role = user?.role;
+  const navigate = useNavigate();
 
-  const handleClick = React.useCallback((item) => {
-    setSelectedItem(item);
-  }, []);
+  // const handleClick = React.useCallback((item) => {
+  //   setSelectedItem(item);
+  // }, []);
 
-  const [quantity, setQuantity] = useState(1);
+  // const [quantity, setQuantity] = useState(1);
 
-  const handleQuantityChange = (operation) => {
-    setQuantity((prev) => {
-      if (operation === "increase") return prev + 1;
-      if (operation === "decrease" && prev > 1) return prev - 1;
-      return prev;
-    });
-  };
+  // const handleQuantityChange = (operation) => {
+  //   setQuantity((prev) => {
+  //     if (operation === "increase") return prev + 1;
+  //     if (operation === "decrease" && prev > 1) return prev - 1;
+  //     return prev;
+  //   });
+  // };
 
   const buyNow = () => {
     alert(`Proceeding to buy ${quantity} item(s).`);
@@ -120,6 +125,24 @@ const ViewBook = () => {
     }
   };
 
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete("http://localhost:8000/api/book/deleteBook", {
+        headers: {
+          bookid: id
+        },
+        withCredentials: true
+      });
+      toast.success(response.data.message)
+      navigate("/allbooks")
+    } catch (error) {
+      console.log("Error in deleting Book", error);
+      toast.error(response.data.message)
+
+    }
+  }
+
   const book = {
     price: data?.price ? formatToRupees(data.price) : "₹0.00",
   };
@@ -159,15 +182,41 @@ const ViewBook = () => {
           </div>
           <div className="w-45% h-90% mr-4 bg-white rounded-lg shadow-md p-6">
             <div className="flex justify-between flex-col text-black">
-              <div className="flex justify-between items-center">
+
+
+              {role === "user" && <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-semibold pb-2">{data.title}</h1>
                 <button
                   onClick={handleFavourites}
                   className="text-3xl text-slate-700 pr-1"
                 >
-                  <FaRegHeart />
+                  <FaRegHeart className="text-pink-400" />
                 </button>
-              </div>
+              </div>}
+
+
+
+              {role === "author" && <div className="flex justify-between items-center">
+                <h1 className="text-3xl font-semibold pb-2">{data.title}</h1> <button
+                  onClick={handleDelete}
+                  className="text-3xl text-slate-700 pr-1"
+                >
+                  <MdOutlineDelete className="text-red-500 text-3xl cursor-pointer" />
+
+                </button>
+
+              </div>}
+
+              {role === "author" &&
+                <div className="flex justify-end items-center">
+                  <Link to={`/updatebook/${id}`}>
+
+                    <FaEdit className="text-black text-3xl cursor-pointer" />
+                  </Link>
+                </div>
+
+              }
+
               <p className="text-2xl text-gray-800 font-semibold mt-2">
                 {book.price}
               </p>
@@ -193,7 +242,7 @@ const ViewBook = () => {
               </p>
             </div>
 
-            <div className="flex items-center mt-6">
+            {/* <div className="flex items-center mt-6">
               <button
                 className="h-11 px-4 py-2 bg-slate-50 rounded-l-3xl border-t border-b border-l border-gray-200 hover:bg-gray-300"
                 onClick={() => handleQuantityChange("decrease")}
@@ -212,7 +261,7 @@ const ViewBook = () => {
               >
                 +
               </button>
-            </div>
+            </div> */}
             <div className="flex space-x-4 mt-7">
               <button
                 className="w-1/2 px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800"
@@ -284,7 +333,7 @@ const ViewBook = () => {
               <li>Published: {data.publicationDate}</li>
             </ul>
 
-            <div className="flex items-center mt-6">
+            {/* <div className="flex items-center mt-6">
               <button
                 className="h-10 w-10 bg-gray-200 rounded-l-lg"
                 onClick={() => handleQuantityChange("decrease")}
@@ -303,13 +352,13 @@ const ViewBook = () => {
               >
                 +
               </button>
-            </div>
+            </div> */}
 
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 mt-6">
-              <button className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800">
+              <button className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800" onClick={addToCart}>
                 Add to Cart
               </button>
-              <button className="flex-1 px-6 py-3 bg-gray-300 text-black rounded-lg hover:bg-gray-400">
+              <button className="flex-1 px-6 py-3 bg-gray-300 text-black rounded-lg hover:bg-gray-400" onClick={buyNow}>
                 Buy Now
               </button>
             </div>

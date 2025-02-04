@@ -145,9 +145,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 
 const NavBar = () => {
-  const { isAuthenticated, logout } = useAuthStore();
+  const { isAuthenticated, logout , user } = useAuthStore();
   const navigate = useNavigate();
   const [MobileNav, setMobileNav] = useState(false);
+  const role = user?.role;
+  // console.log(role);
+  
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -189,7 +192,7 @@ const NavBar = () => {
                 onClick={() => handleNavigation("/profile")}
                 className="bg-white text-secondary px-4 py-1 rounded-md border-2 border-white hover:bg-secondary hover:text-white"
               >
-                Profile
+                 {role === "author" ? "Author's Profile" : "Profile"}
               </button>
               <button
                 onClick={logout}
@@ -218,20 +221,20 @@ const NavBar = () => {
           ) : (
             <p onClick={() => handleNavigation("/cart")} className="cursor-pointer hover:underline">Cart</p>
           )}
-          {!isAuthenticated ? (
+          {!isAuthenticated ?  (
             <button
               onClick={() => handleNavigation("/login")}
               className="bg-white text-secondary w-full py-2 rounded-md border-2 border-white hover:bg-secondary hover:text-white"
             >
               Sign In
             </button>
-          ) : (
+          ) : ( 
             <>
               <button
                 onClick={() => handleNavigation("/profile")}
                 className="bg-white text-secondary w-full py-2 rounded-md border-2 border-white hover:bg-secondary hover:text-white"
               >
-                Profile
+                 {role === "author" ? "Author's Profile" : "Profile"}
               </button>
               <button
                 onClick={logout}
