@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { axiosInstance } from "../../lib/axios";
 
 
 const AllOrders = () => {
@@ -9,8 +10,8 @@ const AllOrders = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await axios.put(
-        `http://localhost:8000/api/order/updateOrderStatus/${orderId}`,  // Corrected path with order id
+      await axiosInstance.put(
+        `/api/order/updateOrderStatus/${orderId}`,  // Corrected path with order id
         { status: newStatus },
         { withCredentials: true }
       );
@@ -28,7 +29,7 @@ const AllOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/order/getallOrder", {
+        const response = await axiosInstance.get("/api/order/getallOrder", {
           withCredentials: true
         });
         setOrders(response.data.data);
