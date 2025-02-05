@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import BookCol from "../../Components/Book/BookCol";
 import NavBar from "../../Components/Navbar/NavBar";
 import Footer from "../../Components/Footer/Footer";
+import { axiosInstance } from "../../lib/axios";
 
 const AllBooks = () => {
 
@@ -12,8 +13,8 @@ const AllBooks = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/api/book/getAllBooks"
+        const response = await axiosInstance.get(
+          "/api/book/getAllBooks"
         );
 
         setData(response.data); // Access the "data" property from the response

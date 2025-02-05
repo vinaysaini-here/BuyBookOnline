@@ -5,6 +5,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { useFavouriteStore } from "../../store/useFavouriteStore";
 import { toast } from 'react-hot-toast'; // Import toast
 import axios  from "axios";
+import { axiosInstance } from "../../lib/axios";
 
 const BookCol = ({ data, Favourite }) => {
   const { user } = useAuthStore();
@@ -34,8 +35,8 @@ const BookCol = ({ data, Favourite }) => {
   const addToCart = async () => {
 
     try {
-      await axios.patch(
-        "http://localhost:8000/api/cart/addBookToCart",
+      await axiosInstance.patch(
+        "/api/cart/addBookToCart",
         {},
         {
           headers: {

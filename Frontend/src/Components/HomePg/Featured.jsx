@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BookCol from "../Book/BookCol";
-import axios from "axios";
+
+import { axiosInstance } from "../../lib/axios";
 
 const Featured = () => {
   const [data, setData] = useState([]); // Initialize as an empty array to avoid `.map` issues
@@ -8,8 +9,8 @@ const Featured = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/api/book/recentBooks"
+        const response = await axiosInstance.get(
+          "/api/book/recentBooks"
         );
 
         setData(response.data); // Access the "data" property from the response

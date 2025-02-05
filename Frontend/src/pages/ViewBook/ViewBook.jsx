@@ -14,6 +14,7 @@ import { useState, useEffect } from "react";
 
 import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../../lib/axios";
 const BOOKS_DATA = [
   {
     id: 1,
@@ -67,8 +68,8 @@ const ViewBook = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/api/book/getBookById/${id}`
+        const response = await axiosInstance.get(
+          `/api/book/getBookById/${id}`
         );
         console.log(response);
 
@@ -83,8 +84,8 @@ const ViewBook = () => {
 
   const handleFavourites = async () => {
     try {
-      await axios.patch(
-        "http://localhost:8000/api/favorites/addBookToFavorite",
+      await axiosInstance.patch(
+        "/api/favorites/addBookToFavorite",
         {},
         {
           headers: {
@@ -105,8 +106,8 @@ const ViewBook = () => {
 
   const addToCart = async () => {
     try {
-      await axios.patch(
-        "http://localhost:8000/api/cart/addBookToCart",
+      await axiosInstance.patch(
+        "/api/cart/addBookToCart",
         {},
         {
           headers: {
@@ -128,7 +129,7 @@ const ViewBook = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete("http://localhost:8000/api/book/deleteBook", {
+      const response = await axiosInstance.delete("/api/book/deleteBook", {
         headers: {
           bookid: id
         },

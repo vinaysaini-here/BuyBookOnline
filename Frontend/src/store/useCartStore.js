@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { axiosInstance } from "../lib/axios";
 
 export const useCartStore = create((set) => ({
   cartItems: [], // Cart state
@@ -9,7 +10,7 @@ export const useCartStore = create((set) => ({
   fetchCart: async (userId) => {
     if (!userId) return;
     try {
-      const response = await axios.get("http://localhost:8000/api/cart/viewCart", {
+      const response = await axiosInstance.get("/api/cart/viewCart", {
         headers: { id: userId },
         withCredentials: true,
       });
@@ -26,7 +27,7 @@ export const useCartStore = create((set) => ({
   // Remove item from cart
   removeItem: async (bookId, userId) => {
     try {
-      await axios.patch(`http://localhost:8000/api/cart/removeBookFromCart/${bookId}`, {}, {
+      await axiosInstance.patch(`/api/cart/removeBookFromCart/${bookId}`, {}, {
         headers: { id: userId },
         withCredentials: true,
       });

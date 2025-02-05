@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
+import { axiosInstance } from "../lib/axios";
 
 export const useOrderStore = create((set, get) => ({
   orders: [], // Store the user's order history
@@ -9,7 +10,7 @@ export const useOrderStore = create((set, get) => ({
     if (!userId) return;
 
     try {
-      const response = await axios.get("http://localhost:8000/api/order/getOrderHistory", {
+      const response = await axiosInstance.get("/api/order/getOrderHistory", {
         headers: { id: userId },
         withCredentials: true, // Send credentials for authentication
       });
@@ -25,7 +26,7 @@ export const useOrderStore = create((set, get) => ({
     if (!userId || !orderId) return;
 
     try {
-      await axios.delete("http://localhost:8000/api/order/removeOrder", {
+      await axiosInstance.delete("/api/order/removeOrder", {
         headers: { orderid: orderId, id: userId },
         withCredentials: true, // Send credentials for authentication
       });

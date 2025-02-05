@@ -1,6 +1,7 @@
 
 import { create } from "zustand";
 import axios from "axios";
+import { axiosInstance } from "../lib/axios";
 
 export const useFavouriteStore = create((set, get) => ({
   favorites: [], // Store favorite books
@@ -10,8 +11,8 @@ export const useFavouriteStore = create((set, get) => ({
     if (!userId) return;
 
     try {
-      const response = await axios.get(
-        "http://localhost:8000/api/favorites/getFavoriteBooks",
+      const response = await axiosInstance.get(
+        "/api/favorites/getFavoriteBooks",
         {
           headers: { id: userId },
           withCredentials: true,
@@ -28,8 +29,8 @@ export const useFavouriteStore = create((set, get) => ({
     if (!userId || !bookId) return;
 
     try {
-      await axios.put(
-        "http://localhost:8000/api/favorites/removeBookToFavorite",
+      await axiosInstance.put(
+        "/api/favorites/removeBookToFavorite",
         {},
         {
           headers: { bookid: bookId, id: userId },

@@ -5,6 +5,7 @@ import { useCartStore } from "../../store/useCartStore";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { axiosInstance } from "../../lib/axios";
 const Cart = () => {
   const { user } = useAuthStore();
   const { cartItems, fetchCart, removeItem  ,clearCartAfterOrder} = useCartStore();
@@ -25,8 +26,8 @@ const Cart = () => {
 
   const PlaceOrder = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/order/placeOrder",
+      const response = await axiosInstance.post(
+        "/api/order/placeOrder",
         { order: cartItems },
         { headers: { id: user._id }, withCredentials: true }
       );

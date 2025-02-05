@@ -2,8 +2,9 @@ import React from "react";
 import BookCol from "../Book/BookCol";
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
+
 import { useState, useEffect } from "react";
+import { axiosInstance } from "../../lib/axios";
 
 const MostPopular = () => {
   const navigate = useNavigate();
@@ -17,8 +18,8 @@ const MostPopular = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8000/api/book/getAllBooks"
+        const response = await axiosInstance.get(
+          "/api/book/getAllBooks"
         );
 
         setData(response.data); // Access the "data" property from the response
