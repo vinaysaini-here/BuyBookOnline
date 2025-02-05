@@ -1,246 +1,178 @@
 import React, { useState } from "react";
 import NavBar from "../../Components/Navbar/NavBar";
 import { FaUpload } from "react-icons/fa";
+import { axiosInstance } from "../../lib/axios";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useAuthStore } from "../../store/useAuthStore";
 
-const AddProduts = () => {
-  const [images, setImages] = useState([]);
+const CLOUDINARY_CLOUD_NAME = "dgldmpf9v"; // Your Cloudinary Cloud Name
+const CLOUDINARY_UPLOAD_PRESET = "book_uploads"; // Set this in Cloudinary settings
+
+const AddProducts = () => {
+  const { user } = useAuthStore();
+  const userId = user?._id;
+  const [bookData, setBookData] = useState({
+    title: "",
+    author: "",
+    description: "",
+    price: "",
+    category: "",
+    language: "",
+    publicationDate: "",
+    pages: "",
+    stock: "",
+  });
+
+  const [imageFile, setImageFile] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null); // State for preview
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e) => {
+    setBookData({ ...bookData, [e.target.name]: e.target.value });
+  };
 
   const handleImageUpload = (event) => {
-    const files = Array.from(event.target.files);
-    const newImages = files.map((file) => ({
-      id: URL.createObjectURL(file), // Temporary URL for preview
-      file,
-    }));
-    setImages((prev) => [...prev, ...newImages]);
+    const file = event.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setPreviewImage(URL.createObjectURL(file)); // Generate preview URL
+    }
   };
 
-  const handleImageReplace = (id) => {
-    document.getElementById(`replace-${id}`).click();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!imageFile) {
+      toast.error("Please upload a cover image.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      // Upload image to Cloudinary
+      const formData = new FormData();
+      formData.append("file", imageFile);
+      formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+      const cloudinaryResponse = await axios.post(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+        formData
+      );
+
+      const coverImageUrl = cloudinaryResponse.data.secure_url;
+
+      // Send book data to backend
+      const response = await axiosInstance.post(
+        "/api/book/saveBook",
+        { ...bookData, coverImage: coverImageUrl },
+        {
+          headers: { id: userId },
+          withCredentials: true, // Send credentials for authentication
+        }
+      );
+
+      toast.success("Book added successfully!");
+      setBookData({
+        title: "",
+        author: "",
+        description: "",
+        price: "",
+        category: "",
+        language: "",
+        publicationDate: "",
+        pages: "",
+        stock: "",
+      });
+      setImageFile(null);
+      setPreviewImage(null); // Clear preview after submission
+    } catch (error) {
+      console.error("Error adding book:", error);
+      toast.error("Failed to add book.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleImageRemove = (id) => {
-    setImages(images.filter((image) => image.id !== id));
-  };
   return (
     <div>
       <NavBar />
-      <div className="flex justify-center align-middle bg-gray-900">
-        <div className="w-85vw max-w-7xl ">
-          <div className="w-full">
-            <p className="text-3xl text-white pt-4 font-semibold">
-              Add New Product
-            </p>
+      <div className="flex justify-center align-middle bg-gray-900 min-h-screen">
+        <div className="w-4/5 max-w-4xl bg-gray-800 p-6 rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold text-white mb-4">Add New Book</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Image Upload */}
             <div>
-              <form>
-                <div className=" h-[100%] md:4 ">
-                  <div className="p-4 bg-transparent ">
-                    <div className="gap-4">
-                      <div>
-                        <p className=" text-white">Product Images</p>
-                        <div className="border-white border-2 mt-2 rounded-md h-32 absolute flex  ">
-                          <div className="flex flex-wrap gap-4 relative p-2">
-                            {/* Upload Box */}
-                            <label className="w-28 flex flex-col justify-center items-center border-2 border-dashed border-gray-300 text-center text-gray-500 hover:bg-gray-50 cursor-pointer">
-                              <FaUpload className="text-2xl mb-2" />
-                              <span className="text-sm">
-                                Click to upload or drag and drop
-                              </span>
-                              <input
-                                type="file"
-                                multiple
-                                accept="image/*"
-                                onChange={handleImageUpload}
-                                className="hidden "
-                              />
-                            </label>
+              <label className="block text-white">Book Cover Image</label>
+              <label className="border-2 border-dashed border-gray-300 p-4 cursor-pointer block text-center text-gray-500 mt-2">
+                <FaUpload className="text-2xl mb-2" />
+                <span className="text-sm">Click to upload or drag & drop</span>
+                <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+              </label>
 
-                            {/* Uploaded Images */}
-                            {images.map((image) => (
-                              <div
-                                key={image.id}
-                                className="relative w-28  border rounded-md overflow-hidden"
-                              >
-                                <img
-                                  src={image.id}
-                                  alt="Product Preview"
-                                  className=" object-cover "
-                                />
-                                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center space-x-2 opacity-0 hover:opacity-100 transition">
-                                  <button
-                                    type="button"
-                                    className="px-2 py-1 bg-white text-xs rounded shadow hover:bg-gray-100"
-                                    onClick={() => handleImageReplace(image.id)}
-                                  >
-                                    Replace
-                                  </button>
-                                  <input
-                                    type="file"
-                                    id={`replace-${image.id}`}
-                                    accept="image/*"
-                                    className="hidden"
-                                    onChange={(e) =>
-                                      handleImageUpload({
-                                        target: { files: e.target.files },
-                                      })
-                                    }
-                                  />
-                                  <button
-                                    type="button"
-                                    className="px-2 py-1 bg-white text-xs rounded shadow hover:bg-gray-100"
-                                    onClick={() => handleImageRemove(image.id)}
-                                  >
-                                    Remove
-                                  </button>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 pt-32">
-                        <label htmlFor="" className=" text-white">
-                          Title of book
-                        </label>
-
-                        <input
-                          type="text"
-                          className="w-full mt-2 bg-gray-700 rounded-lg text-slate-100 p-2 outline-none"
-                          placeholder="title of book"
-                          required
-                        />
-                      </div>
-                      <div className="mt-4">
-                        <label htmlFor="" className="text-white">
-                          Author of book
-                        </label>
-
-                        <input
-                          type="text"
-                          className="w-full mt-2 bg-gray-700 rounded-lg text-slate-100 p-2 outline-none"
-                          placeholder="author of book"
-                          required
-                        />
-                      </div>
-
-                      <div className="flex mt-4">
-                        <div className="w-3/6 pr-4">
-                          <label htmlFor="" className=" text-white">
-                            Price
-                          </label>
-
-                          <input
-                            type="number"
-                            className="w-full mt-2 rounded-lg bg-gray-700 text-slate-100 p-2 outline-none"
-                            placeholder="price of book"
-                            name="price"
-                            required
-                          />
-                        </div>
-                        <div className="w-3/6">
-                          <label htmlFor="" className=" text-white">
-                            Language
-                          </label>
-
-                          <input
-                            type="text"
-                            className="w-full mt-2 bg-gray-700 rounded-lg text-slate-100 p-2 outline-none"
-                            placeholder="language of book"
-                            name="language"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div className="flex mt-4">
-                        <div className="w-3/6 pr-4">
-                          <label htmlFor="" className=" text-white">
-                            Pages
-                          </label>
-
-                          <input
-                            type="number"
-                            className="w-full mt-2 rounded-lg bg-gray-700 text-slate-100 p-2 outline-none"
-                            placeholder="number of pages"
-                            name="pages"
-                            required
-                          />
-                        </div>
-                        <div className="w-3/6">
-                          <label htmlFor="" className=" text-white">
-                            Category
-                          </label>
-
-                          <input
-                            type="text"
-                            className="w-full mt-2 bg-gray-700 rounded-lg text-slate-100 p-2 outline-none"
-                            placeholder="category of book"
-                            name="category"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div className="flex mt-4">
-                        <div className="w-3/6 pr-4">
-                          <label htmlFor="" className=" text-white">
-                            Publication Date
-                          </label>
-
-                          <input
-                            type="date"
-                            className="w-full mt-2 rounded-lg bg-gray-700 text-slate-100 p-2 outline-none"
-                            name="date"
-                            required
-                          />
-                        </div>
-                        <div className="w-3/6">
-                          <label htmlFor="" className=" text-white">
-                            Stock
-                          </label>
-
-                          <input
-                            type="number"
-                            className="w-full mt-2 bg-gray-700 rounded-lg text-slate-100 p-2 outline-none"
-                            placeholder="stock available"
-                            name="stock"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div className="mt-4">
-                        <label htmlFor="" className=" text-white">
-                          Description
-                        </label>
-
-                        <textarea
-                          className="w-full mt-2 bg-gray-700 rounded-lg text-slate-100 p-2 outline-none"
-                          placeholder="title of book"
-                          rows="4"
-                          required
-                        />
-                      </div>
-                      <button
-                        type="button"
-                        className="mt-4 px-6 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600"
-                        onClick={() => alert("Uploaded")}
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </div>
+              {/* Image Preview */}
+              {previewImage && (
+                <div className="mt-4 flex justify-center">
+                  <img src={previewImage} alt="Selected Book Cover" className="w-40 h-40 object-cover rounded-lg border" />
                 </div>
-              </form>
-              {/* <label for="category">Category:</label>
-              <select id="category" name="category">
-                <option value="Electronics">Electronics</option>
-                <option value="Clothing">Clothing</option>
-                <option value="Home & Garden">Home & Garden</option>
-              </select> */}
+              )}
             </div>
-          </div>
+
+            {/* Form Inputs */}
+            <div>
+              <label className="block text-white">Title</label>
+              <input type="text" name="title" value={bookData.title} onChange={handleChange} required className="w-full mt-2 bg-gray-700 text-white p-2 rounded" />
+            </div>
+
+            <div>
+              <label className="block text-white">Author ID</label>
+              <input type="text" name="author" value={bookData.author} onChange={handleChange} required className="w-full mt-2 bg-gray-700 text-white p-2 rounded" />
+            </div>
+            <div>
+              <label className="block text-white">Pages</label>
+              <input type="number" name="pages" value={bookData.pages} onChange={handleChange} required className="w-full mt-2 bg-gray-700 text-white p-2 rounded" />
+            </div>
+
+            <div>
+              <label className="block text-white">Description</label>
+              <textarea name="description" value={bookData.description} onChange={handleChange} required className="w-full mt-2 bg-gray-700 text-white p-2 rounded" rows="3"></textarea>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-white">Price</label>
+                <input type="number" name="price" value={bookData.price} onChange={handleChange} required className="w-full mt-2 bg-gray-700 text-white p-2 rounded" />
+              </div>
+              <div>
+                <label className="block text-white">Stock</label>
+                <input type="number" name="stock" value={bookData.stock} onChange={handleChange} required className="w-full mt-2 bg-gray-700 text-white p-2 rounded" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-white">Language</label>
+                <input type="text" name="language" value={bookData.language} onChange={handleChange} required className="w-full mt-2 bg-gray-700 text-white p-2 rounded" />
+              </div>
+              <div>
+                <label className="block text-white">Category</label>
+                <input type="text" name="category" value={bookData.category} onChange={handleChange} required className="w-full mt-2 bg-gray-700 text-white p-2 rounded" />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-white">Publication Date</label>
+              <input type="date" name="publicationDate" value={bookData.publicationDate} onChange={handleChange} required className="w-full mt-2 bg-gray-700 text-white p-2 rounded" />
+            </div>
+
+            <button type="submit" disabled={isSubmitting} className="mt-4 w-full px-4 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600">
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </button>
+          </form>
         </div>
       </div>
     </div>
   );
 };
 
-export default AddProduts;
+export default AddProducts;

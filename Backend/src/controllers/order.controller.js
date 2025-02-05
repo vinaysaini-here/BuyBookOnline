@@ -121,11 +121,11 @@ export const getAllOders = async (req, res) =>{
         const userData = await Order.find(
             ).populate(
                 {
-                    path: 'Book',
+                    path: 'book',
                    
                 })
                 .populate({
-                    path: 'User',
+                    path: 'user',
                     
                 }
             ).sort({createdAt: -1});

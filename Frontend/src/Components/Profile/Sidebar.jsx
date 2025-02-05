@@ -37,6 +37,7 @@ const Sidebar = () => {
             {user?.name}
           </h2>
           <p className="text-sm pt-1 pb-7 text-slate-800">{user?.email}</p>
+          <p className="text-sm pt-1 pb-7 text-slate-800">{user?._id}</p>
         </div>
         <hr />
         {role === "user" && <div className="mt-12 space-y-8 text-lg flex items-center flex-col">

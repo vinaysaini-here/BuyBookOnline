@@ -28,11 +28,12 @@ export const BookInfo = async (req, res) => {
       stock,
     } = req.body;
 
-    // let imageUrl;
-    // if (image) {
-    //   const uploadResponse = await cloudinary.uploader.upload(image);
-    //   imageUrl = uploadResponse.secure_url;
-    // }
+    let imageUrl;
+    if (!coverImage) {
+      res.status(401).json({ message: "Missing cover image" });
+    }
+    const uploadResponse = await cloudinary.uploader.upload(coverImage);
+    imageUrl = uploadResponse.secure_url;
 
     const newBook = new Book({
       title,
@@ -43,8 +44,8 @@ export const BookInfo = async (req, res) => {
       language,
       publicationDate,
       pages,
-      // coverImage: imageUrl,
-      coverImage, // delete it after imageUrl start working
+      coverImage: imageUrl,
+      // coverImage, // delete it after imageUrl start working
       stock,
     });
 
@@ -52,7 +53,7 @@ export const BookInfo = async (req, res) => {
 
     res.status(200).json(newBook);
   } catch (error) {
-    console.log("error in sendmessage controller ", error.message);
+    console.log("error in Book saving controller ", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
