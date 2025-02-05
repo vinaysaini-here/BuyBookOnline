@@ -2,14 +2,14 @@ import React from "react";
 import NavBar from "../../Components/Navbar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 import assets from "../../assets/assets";
-import { FaRegHeart, FaEdit } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
-import { Link } from "react-router-dom";
+
 
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast"
 
-import axios from "axios";
+
 import { useState, useEffect } from "react";
 
 import { useAuthStore } from "../../store/useAuthStore";
@@ -208,7 +208,7 @@ const ViewBook = () => {
 
               </div>}
 
-              {role === "author" &&
+              {/* {role === "author" &&
                 <div className="flex justify-end items-center">
                   <Link to={`/updatebook/${id}`}>
 
@@ -216,7 +216,7 @@ const ViewBook = () => {
                   </Link>
                 </div>
 
-              }
+              } */}
 
               <p className="text-2xl text-gray-800 font-semibold mt-2">
                 {book.price}
@@ -231,7 +231,8 @@ const ViewBook = () => {
                 <li>Category : {data.category}</li>
                 <li>No. of Pages : {data.pages}</li>
                 <li>No. of Copies in Stock : {data.stock}</li>
-                <li> Publication Date : {data.publicationDate}</li>
+                <li> Publication Date : {new Date(data.publicationDate).toLocaleString()}</li>
+                {/* {new Date(order.createdAt).toLocaleString()} */}
               </ul>
             </div>
             {/* Extra Information */}
@@ -270,12 +271,12 @@ const ViewBook = () => {
               >
                 Add to Cart
               </button>
-              <button
+              {/* <button
                 className="w-1/2 px-6 py-3 bg-gray-300 text-black rounded-md hover:bg-gray-400"
                 onClick={buyNow}
               >
                 Buy Now
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -355,13 +356,25 @@ const ViewBook = () => {
               </button>
             </div> */}
 
+            {role === "author" && <div className="flex justify-between items-center">
+              <h1 className="text-3xl font-semibold pb-2">{data.title}</h1> <button
+                onClick={handleDelete}
+                className="text-3xl text-slate-700 pr-1"
+              >
+                <MdOutlineDelete className="text-red-500 text-3xl cursor-pointer" />
+
+              </button>
+
+            </div>}
+
+
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 mt-6">
               <button className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800" onClick={addToCart}>
                 Add to Cart
               </button>
-              <button className="flex-1 px-6 py-3 bg-gray-300 text-black rounded-lg hover:bg-gray-400" onClick={buyNow}>
+              {/* <button className="flex-1 px-6 py-3 bg-gray-300 text-black rounded-lg hover:bg-gray-400" onClick={buyNow}>
                 Buy Now
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

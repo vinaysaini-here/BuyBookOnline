@@ -34,10 +34,11 @@ router.get(
 );
 
 router.put(
-  "updateOrderStatus",
+  "/updateOrderStatus/:id",  // :id added here
   accessTokenAutoRefresh,
   passport.authenticate("jwt", { session: false }),
   updateOrderStatus
 );
+
 
 export default router;

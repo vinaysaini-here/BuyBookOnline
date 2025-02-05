@@ -2,7 +2,7 @@ import express from "express";
 import {
   BookInfo,
   DeleteBook,
-  UpdateBook,
+  // UpdateBook,
   GetAllBooks,
   GetRecentBooks,
   GetBookById,
@@ -23,12 +23,12 @@ router.post(
   BookInfo
 );
 
-router.patch(
-  "/updateBook",
-  accessTokenAutoRefresh,
-  passport.authenticate("jwt", { session: false }),
-  UpdateBook
-);
+// router.patch(
+//   "/updateBook",
+//   accessTokenAutoRefresh,
+//   passport.authenticate("jwt", { session: false }),
+//   UpdateBook
+// );
 
 router.delete(
   "/deleteBook",

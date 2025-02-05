@@ -138,15 +138,17 @@ export const getAllOders = async (req, res) =>{
 }
 
 
-export const updateOrderStatus = async (req, res) =>{
+export const updateOrderStatus = async (req, res) => {
     try {
-        const {id} = req.params;
-        await Order.findByIdAndUpdate(id, {status: req.body.status});
-        res.status(200).json({message: "Order status updated successfully"});
+      const { id } = req.params;
+      const { status } = req.body;  // Make sure 'status' is passed in the request body
+      await Order.findByIdAndUpdate(id, { status });
+  
+      res.status(200).json({ message: "Order status updated successfully" });
+    } catch (error) {
+      console.log("Error in updateOrderStatus controller ", error.message);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-    catch (error) {
-        console.log("error in updateOrderStatus controller ", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-}
+  };
+  
 

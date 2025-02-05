@@ -58,48 +58,49 @@ export const BookInfo = async (req, res) => {
   }
 };
 
-export const UpdateBook = async (req, res) => {
-  try {
-    const { bookid } = req.headers;
-    const {
-      title,
-      author,
-      description,
-      price,
-      category,
-      language,
-      publicationDate,
-      pages,
-      coverImage,
-      stock,
-    } = req.body;
+// export const UpdateBook = async (req, res) => {
+//   try {
+//     const { bookid } = req.headers;
+//     const {
+//       title,
+//       author,
+//       description,
+//       price,
+//       category,
+//       language,
+//       publicationDate,
+//       pages,
+//       coverImage,
+//       stock,
+//     } = req.body;
 
-    // let imageUrl;
-    // if (image) {
-    //   const uploadResponse = await cloudinary.uploader.upload(image);
-    //   imageUrl = uploadResponse.secure_url;
-    // }
+//     let imageUrl;
+//     if (!coverImage) {
+//       res.status(401).json({ message: "Missing cover image" });
+//     }
+//     const uploadResponse = await cloudinary.uploader.upload(coverImage);
+//     imageUrl = uploadResponse.secure_url;
 
-    await Book.findByIdAndUpdate(bookid, {
-      title,
-      author,
-      description,
-      price,
-      category,
-      language,
-      publicationDate,
-      pages,
-      // coverImage: imageUrl,
-      coverImage, // delete it after imageUrl start working
-      stock,
-    });
+//     await Book.findByIdAndUpdate(bookid, {
+//       title,
+//       author,
+//       description,
+//       price,
+//       category,
+//       language,
+//       publicationDate,
+//       pages,
+//       coverImage: imageUrl,
+//       // coverImage, // delete it after imageUrl start working
+//       stock,
+//     });
 
-    return res.status(200).json({ message: "Book updated successfully" });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
+//     return res.status(200).json({ message: "Book updated successfully" });
+//   } catch (error) {
+//     console.log(error.message);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
 
 export const DeleteBook = async (req, res) => {
   try {

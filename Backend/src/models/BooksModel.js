@@ -27,6 +27,7 @@ const bookSchema = new mongoose.Schema(
         "Motivational",
         "Others",
       ],
+      default : "Others"
     },
     language: { type: String, required: true },
     publicationDate: { type: Date, default: Date.now },
