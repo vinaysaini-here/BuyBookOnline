@@ -15,6 +15,7 @@ const colors = {
 };
 
 const SignIn = () => {
+  const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:8000" : "/";
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -32,7 +33,7 @@ const SignIn = () => {
   };
 
   const handleGoogleLogin = async () => {
-    window.open(`http://localhost:8000/auth/google`, "_self");
+    window.open(`${BASE_URL}/auth/google`, "_self");
   };
 
   return (

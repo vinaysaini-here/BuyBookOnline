@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+
 dotenv.config();
 import { connectDB } from "./src/config/connectdb.js";
 import cookieParser from "cookie-parser";
@@ -14,8 +15,11 @@ import orderRoutes from "./src/routes/order.routes.js";
 import "./src/config/passport-jwt-strategy.js";
 import setTokensCookies from "./src/utils/setTokensCookies.js";
 import "./src/config/googleStrategy.js";
+import path from "path";
 
 const app = express();
+
+const __dirname = path.resolve();
 
 const corsOptions = {
   // set origin to a specific origin.
@@ -38,6 +42,14 @@ app.use("/api/book", bookRoutes);
 app.use("/api/favorites", favoritesRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/order", orderRoutes);
+
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static(path.join(__dirname , "../Frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../Frontend" , "dist" , "index.html"));
+  });
+}
 
 app.get(
   "/auth/google",
