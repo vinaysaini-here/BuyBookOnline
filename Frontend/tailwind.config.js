@@ -35,6 +35,7 @@ export default {
       },
       backgroundImage: {
         homebg: "url('./src/assets/homebg.jpg')",
+        homebg2: "url('https://www.jcollectionhotels.com/wp-content/uploads/2024/03/13-1536x1025.jpg')",
       },
       colors: {
         primary: "#1A202C",

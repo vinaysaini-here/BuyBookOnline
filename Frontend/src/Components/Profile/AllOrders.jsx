@@ -50,7 +50,7 @@ const AllOrders = () => {
       <h1 className="text-2xl font-bold mb-6 text-gray-900">All Orders</h1>
       <ul className="border rounded-xl p-3 border-gray-800">
         {orders.map((order) => (
-          <li key={order._id}>
+          <li key={order._id} className="mb-2">
             <strong>Order ID:</strong> {order._id} <br />
             <strong>Status:</strong> {order.status} <br />
             <strong>Book:</strong> {order.book?.title || "N/A"} <br />
@@ -68,6 +68,7 @@ const AllOrders = () => {
                 <option value="Canceled">Canceled</option>
               </select>
             </div>
+            <hr />
           </li>
         ))}
       </ul>
