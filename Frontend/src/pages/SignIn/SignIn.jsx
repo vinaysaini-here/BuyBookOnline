@@ -33,7 +33,7 @@ const SignIn = () => {
   };
 
   const handleGoogleLogin = async () => {
-    window.open(`https://buybookonline.onrender.com/auth/google`, "_self");
+    window.location.href = "https://buybookonline.onrender.com/auth/google";
   };
 
   return (
