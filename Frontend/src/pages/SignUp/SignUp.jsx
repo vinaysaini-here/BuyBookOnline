@@ -52,7 +52,7 @@ const SignUp = () => {
   };
 
   const handleGoogleLogin = async () => {
-    window.open(`${BASE_URL}/auth/google`, "_self");
+    window.open(`https://buybookonline.onrender.com/auth/google`, "_self");
   };
 
   return (
