@@ -23,7 +23,7 @@ const __dirname = path.resolve();
 
 const corsOptions = {
   // set origin to a specific origin.
-  origin: process.env.FRONTEND_HOST,
+  origin:[ process.env.FRONTEND_HOST, "https://buybookonline.onrender.com"],
   credentials: true,
   optionsSuccessStatus: 200,
 };
