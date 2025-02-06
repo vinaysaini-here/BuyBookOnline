@@ -361,7 +361,7 @@ class UserController {
         expiresIn: "15m",
       });
       // Reset Link
-      const resetLink = `${process.env.FRONTEND_HOST}/newpassword/${user._id}/${token}`;
+      const resetLink = `https://buybookonline.onrender.com/newpassword/${user._id}/${token}`;
       // const resetLink = `${process.env.FRONTEND_HOST}/newpassword`;
       console.log(resetLink);
 

@@ -68,7 +68,7 @@ const AllOrders = () => {
                 <option value="Canceled">Canceled</option>
               </select>
             </div>
-            <hr />
+            <hr  className="mt-2"/>
           </li>
         ))}
       </ul>
