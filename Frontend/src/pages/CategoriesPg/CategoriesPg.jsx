@@ -37,9 +37,7 @@ const CategoriesPg = () => {
               <div className="h-56 ">
                 <Link
                   key={index}
-                  to={`/category/${category.name
-                    .toLowerCase()
-                    .replace(/ /g, "-")}`}
+                  to={"/allbooks"}
                   className="relative h-48 group rounded-t-lg overflow-hidden shadow hover:shadow-lg transition duration-300 flex justify-center bg-slate-300"
                 >
                   <img
