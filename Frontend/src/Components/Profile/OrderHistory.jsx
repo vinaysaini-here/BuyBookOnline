@@ -82,7 +82,7 @@ const OrderHistory = () => {
         </div>
 
         {/* Mobile View - Card Layout */}
-        <div className="sm:hidden flex flex-col gap-3">
+        <div className="block sm:hidden flex-1 h-90vh overflow-auto w-full p-6">
           {orders.length > 0 ? (
             orders.map((order, index) => (
               <div

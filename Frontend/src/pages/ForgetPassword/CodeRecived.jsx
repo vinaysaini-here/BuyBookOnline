@@ -1,52 +1,39 @@
-import React from 'react'
+import React from "react";
 import assets from "../../assets/assets";
-
 
 const CodeRecived = () => {
   return (
-    <div className=" bg-[#ebdfdf] h-screen w-screen flex items-center justify-center">
-      <div className="bg-[#f4efef] flex items-center justify-center w-[59%] h-[80%] rounded-xl">
-        <div className="relative w-1/2  h-full flex flex-col">
-          <img
-            src={assets.ForgetPassword_img}
-            className="w-full h-full object-cover rounded-s-xl bg-[#00aeff]"
-          />
+    <div className="w-full min-h-screen flex items-center justify-center bg-HomeBgColor p-6">
+    <div className="max-w-4xl w-full bg-white/90 backdrop-blur-lg shadow-xl rounded-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-2">
+      {/* Left: Image Section */}
+      <div className="hidden lg:flex items-center justify-center p-6">
+        <img
+          src={assets.ForgetPassword_img}
+          className="w-full h-auto max-h-[350px] object-contain"
+          alt="Verification Email Sent"
+        />
+      </div>
+
+      {/* Right: Content Section */}
+      <div className="p-8 lg:p-12 flex flex-col items-center text-center">
+        <h3 className="text-3xl font-bold text-black">
+          Check Your Email!
+        </h3>
+        <p className="text-sm sm:text-base text-gray-600 mt-4">
+          We've sent a verification code to your registered email. Please check your inbox.
+        </p>
+
+        <div className="mt-6 bg-gray-100 border border-gray-300 rounded-lg py-2 px-4 text-gray-800 text-lg font-semibold tracking-widest">
+          ✉ Your Verification Code: <span className="text-gray-800">XXXXXX</span>
         </div>
-        <div className="w-1/2 h-full max-w-[500px] bg-[#f4efef] flex flex-col p-16 items-start justify-center rounded-xl">
-          <div className=" flex flex-col mb-21 text-[#060606] justify-center items-start py-4 ">
-            <h3 className="text-3xl font-semibold mb-2">
-            Check your email for a verification code.
-            </h3>
-            {/* <p className="text-base mt-6 mb-4 text-center">
-            Check your email for a verification code.
-            </p> */}
-          </div>
 
-
-
-
-
-
-          {/* <div className="w-full flex flex-col gap-5 ">
-            <input
-              type="number"
-              placeholder="4-digit code"
-              className="w-full pl-2 text-black py-2 my-2 bg-[#d1eaf6]  border rounded-lg border-black focus: outline-none"
-            />
-          </div>
-          <div className="w-full flex flex-col my-4 mt-5 ">
-            <button className="w-full text-black my-2 font-semibold bg-[#00aeff] border border-black rounded-md p-4 text-center flex items-center justify-center cursor-pointer">
-              Submit
-            </button>
-          </div> */}
-
-
-
-          <p className=''>If you don’t see the email in your inbox, check your spam folder. If it’s not there, the email address may not be confirmed, or it may not match an existing account.</p>
-        </div>
+        <p className="text-xs sm:text-sm text-gray-500 mt-4">
+          If you don’t see the email in your inbox, check your spam folder.
+        </p>
       </div>
     </div>
-  )
-}
+  </div>
+  );
+};
 
-export default CodeRecived
+export default CodeRecived;

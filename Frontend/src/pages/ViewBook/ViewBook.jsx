@@ -5,10 +5,8 @@ import assets from "../../assets/assets";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
 
-
 import { useParams } from "react-router-dom";
-import { toast } from "react-hot-toast"
-
+import { toast } from "react-hot-toast";
 
 import { useState, useEffect } from "react";
 
@@ -68,9 +66,7 @@ const ViewBook = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axiosInstance.get(
-          `/api/book/getBookById/${id}`
-        );
+        const response = await axiosInstance.get(`/api/book/getBookById/${id}`);
         console.log(response);
 
         setData(response.data); // Access the "data" property from the response
@@ -95,7 +91,7 @@ const ViewBook = () => {
           withCredentials: true, // Ensures authentication tokens are sent
         }
       );
-      toast.success("Added to Favourites.")
+      toast.success("Added to Favourites.");
     } catch (error) {
       console.error(
         "Error adding to favourites:",
@@ -117,7 +113,7 @@ const ViewBook = () => {
           withCredentials: true, // Ensures authentication tokens are sent
         }
       );
-      toast.success(`${data.title} Added to Cart.`)
+      toast.success(`${data.title} Added to Cart.`);
     } catch (error) {
       console.error(
         "Error adding to Cart:",
@@ -126,23 +122,21 @@ const ViewBook = () => {
     }
   };
 
-
   const handleDelete = async () => {
     try {
       const response = await axiosInstance.delete("/api/book/deleteBook", {
         headers: {
-          bookid: id
+          bookid: id,
         },
-        withCredentials: true
+        withCredentials: true,
       });
-      toast.success(response.data.message)
-      navigate("/allbooks")
+      toast.success(response.data.message);
+      navigate("/allbooks");
     } catch (error) {
       console.log("Error in deleting Book", error);
-      toast.error(response.data.message)
-
+      toast.error(response.data.message);
     }
-  }
+  };
 
   const book = {
     price: data?.price ? formatToRupees(data.price) : "₹0.00",
@@ -183,30 +177,29 @@ const ViewBook = () => {
           </div>
           <div className="w-45% h-90% mr-4 bg-white rounded-lg shadow-md p-6">
             <div className="flex justify-between flex-col text-black">
+              {role === "user" && (
+                <div className="flex justify-between items-center">
+                  <h1 className="text-3xl font-semibold pb-2">{data.title}</h1>
+                  <button
+                    onClick={handleFavourites}
+                    className="text-3xl text-slate-700 pr-1"
+                  >
+                    <FaRegHeart className="text-pink-400" />
+                  </button>
+                </div>
+              )}
 
-
-              {role === "user" && <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-semibold pb-2">{data.title}</h1>
-                <button
-                  onClick={handleFavourites}
-                  className="text-3xl text-slate-700 pr-1"
-                >
-                  <FaRegHeart className="text-pink-400" />
-                </button>
-              </div>}
-
-
-
-              {role === "author" && <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-semibold pb-2">{data.title}</h1> <button
-                  onClick={handleDelete}
-                  className="text-3xl text-slate-700 pr-1"
-                >
-                  <MdOutlineDelete className="text-red-500 text-3xl cursor-pointer" />
-
-                </button>
-
-              </div>}
+              {role === "author" && (
+                <div className="flex justify-between items-center">
+                  <h1 className="text-3xl font-semibold pb-2">{data.title}</h1>{" "}
+                  <button
+                    onClick={handleDelete}
+                    className="text-3xl text-slate-700 pr-1"
+                  >
+                    <MdOutlineDelete className="text-red-500 text-3xl cursor-pointer" />
+                  </button>
+                </div>
+              )}
 
               {/* {role === "author" &&
                 <div className="flex justify-end items-center">
@@ -231,7 +224,11 @@ const ViewBook = () => {
                 <li>Category : {data.category}</li>
                 <li>No. of Pages : {data.pages}</li>
                 <li>No. of Copies in Stock : {data.stock}</li>
-                <li> Publication Date : {new Date(data.publicationDate).toLocaleString()}</li>
+                <li>
+                  {" "}
+                  Publication Date :{" "}
+                  {new Date(data.publicationDate).toLocaleString()}
+                </li>
                 {/* {new Date(order.createdAt).toLocaleString()} */}
               </ul>
             </div>
@@ -266,7 +263,7 @@ const ViewBook = () => {
             </div> */}
             <div className="flex space-x-4 mt-7">
               <button
-                className="w-1/2 px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800"
+                className="w-full px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800"
                 onClick={addToCart}
               >
                 Add to Cart
@@ -356,20 +353,22 @@ const ViewBook = () => {
               </button>
             </div> */}
 
-            {role === "author" && <div className="flex justify-between items-center">
-              <h1 className="text-3xl font-semibold pb-2">{data.title}</h1> <button
-                onClick={handleDelete}
-                className="text-3xl text-slate-700 pr-1"
+            {role === "author" && (
+              <div className="flex justify-between items-center">
+                <h1 className="text-3xl font-semibold pb-2">{data.title}</h1>{" "}
+                <button
+                  onClick={handleDelete}
+                  className="text-3xl text-slate-700 pr-1"
+                >
+                  <MdOutlineDelete className="text-red-500 text-3xl cursor-pointer" />
+                </button>
+              </div>
+            )}
+            <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 w-full mt-6">
+              <button
+                className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 "
+                onClick={addToCart}
               >
-                <MdOutlineDelete className="text-red-500 text-3xl cursor-pointer" />
-
-              </button>
-
-            </div>}
-
-
-            <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 mt-6">
-              <button className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800" onClick={addToCart}>
                 Add to Cart
               </button>
               {/* <button className="flex-1 px-6 py-3 bg-gray-300 text-black rounded-lg hover:bg-gray-400" onClick={buyNow}>
@@ -383,6 +382,5 @@ const ViewBook = () => {
     </div>
   );
 };
-
 
 export default ViewBook;

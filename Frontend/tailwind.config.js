@@ -6,6 +6,11 @@ export default {
       height: {
         "93vh": "93vh",
         "90vh": "90vh",
+        "89vh": "89vh",
+        "88vh": "88vh",
+        "87vh": "87vh",
+        "10vh": "10vh",
+        "11vh": "11vh",
         "100vh": "100vh",
         "120vh": "120vh",
         "92vh": "92vh",

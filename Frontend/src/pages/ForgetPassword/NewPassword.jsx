@@ -32,50 +32,48 @@ const NewPassword = () => {
   };
 
   return (
-    <div className="bg-[#ebdfdf] h-screen w-screen flex items-center justify-center">
-      <div className="bg-[#f4efef] flex items-center justify-center w-[59%] h-[80%] rounded-xl">
-        <div className="relative w-1/2 h-full flex flex-col">
+    <div className="w-full min-h-screen flex items-center justify-center bg-HomeBgColor p-6">
+      <div className="max-w-4xl w-full bg-white/90 backdrop-blur-lg shadow-xl rounded-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-2">
+        {/* Left: Image Section */}
+        <div className="hidden lg:flex items-center justify-center p-6">
           <img
-            src={assets.EnterMail_img}
-            className="w-full h-full object-cover rounded-s-xl"
+           src={assets.EnterMail_img}
+            className="w-full h-auto max-h-[350px] object-contain"
+            alt="Reset Password"
           />
         </div>
-        <div className="w-1/2 h-full max-w-[500px] bg-[#f4efef] flex flex-col p-16 items-start justify-center rounded-xl">
-          <div className="flex flex-col mb-21 text-[#060606] justify-center items-start py-4">
-            <h3 className="text-4xl font-semibold mb-2">
-              <p>Reset</p>
-              <p>Your Password?</p>
-            </h3>
-          </div>
-          <form onSubmit={handleSubmit}>
-            <div className="w-full flex flex-col gap-5">
+        
+        {/* Right: Form Section */}
+        <div className="p-8 lg:p-12 flex flex-col items-center text-center">
+          <h3 className="text-3xl font-bold text-black">Reset Your Password</h3>
+          <p className="text-sm sm:text-base text-gray-600 mt-2">
+            Choose a strong password that you haven’t used before.
+          </p>
+
+          <form onSubmit={handleSubmit} className="w-full mt-6">
               <input
                 type="password"
                 placeholder="Password"
-                className="w-full pl-2 text-black py-2 my-2 bg-[#d1eaf6] border rounded-lg border-black focus:outline-none"
+                className="w-full py-3 px-4 mb-4 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
                 value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
               />
-            </div>
-            <div className="w-full flex flex-col gap-5">
               <input
                 type="password"
                 placeholder="Confirm Password"
-                className="w-full pl-2 text-black py-2 my-2 bg-[#d1eaf6] border rounded-lg border-black focus:outline-none"
+                className="w-full py-3 px-4 mb-4 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
                 value={formData.confirmPassword}
                 onChange={(e) =>
                   setFormData({ ...formData, confirmPassword: e.target.value })
                 }
               />
-            </div>
-            <div className="w-full flex flex-col my-4 mt-5">
               <button
                 type="submit"
-                className="w-full text-black my-2 font-semibold bg-[#00aeff] border border-black rounded-md p-4 text-center flex items-center justify-center cursor-pointer" disabled={setnewPassword}
+                className="w-full  bg-black hover:bg-[#434444] text-white font-semibold py-3 rounded-lg flex items-center justify-center transition " disabled={setnewPassword}
               >
                 {setnewPassword ? (
                   <>
@@ -87,7 +85,6 @@ const NewPassword = () => {
                 )}
               </button>
 
-            </div>
           </form>
         </div>
       </div>

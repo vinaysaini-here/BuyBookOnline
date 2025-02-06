@@ -23,36 +23,44 @@ const ForgetPassword = () => {
 
 
   return (
-    <div className=" bg-[#ebdfdf] h-screen w-screen flex items-center justify-center">
-      <div className="bg-[#f4efef] flex items-center justify-center w-[59%] h-[80%] rounded-xl">
-        <div className="relative w-1/2  h-full flex flex-col">
+    <div className="w-full min-h-screen flex items-center justify-center bg-HomeBgColor p-6">
+      <div className="max-w-4xl w-full bg-white/90 backdrop-blur-lg shadow-xl rounded-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-2">
+        {/* Left: Image Section */}
+        <div className="hidden lg:block">
           <img
             src={assets.ForgetPassword_img}
-            className="w-full h-full object-cover rounded-s-xl bg-[#00aeff]"
+            className="w-full h-full object-cover rounded-l-2xl"
+            alt="Forgot Password"
           />
         </div>
-        <div className="w-1/2 h-full max-w-[500px] bg-[#f4efef] flex flex-col p-16 items-start justify-center rounded-xl">
-          <div className=" flex flex-col mb-21 text-[#060606] justify-center items-start py-4 ">
-            <h3 className="text-4xl font-semibold mb-2">
-              <p>Forget</p>
-              <p>Your Password?</p>
-            </h3>
-          </div>
-          <form onSubmit={handleSubmit} >
-            <div className="w-full flex flex-col gap-5 ">
-              <input
-                type="email"
-                placeholder="Enter Email"
-                className="w-full pl-2 text-black py-2 my-2 bg-[#d1eaf6]  border rounded-lg border-black focus: outline-none"
-                required value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              />
-            </div>
-            <div className="w-full flex flex-col my-4 mt-5 ">
-              <button className="w-full text-black my-2 font-semibold bg-[#00aeff] border border-black rounded-md p-4 text-center flex items-center justify-center cursor-pointer">
+
+        {/* Right: Form Section */}
+        <div className="p-8 lg:p-12 flex flex-col items-center text-center">
+          <h3 className="text-3xl font-bold text-black">
+            Forgot Your Password?
+          </h3>
+          <p className="text-sm sm:text-base text-gray-600 mt-4">
+            No worries! Enter your email below and we’ll send you an OTP to reset your password.
+          </p>
+
+          <form onSubmit={handleSubmit} className="w-full mt-6 flex flex-col">
+            {/* Email Input */}
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-full px-4 py-3 my-2 bg-gray-100 text-black border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4f5050] outline-none"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
+
+            {/* Send OTP Button */}
+            <button
+              className="w-full mt-4 py-3 text-white font-semibold bg-black hover:bg-[#434444] rounded-md transition-all duration-300 flex items-center justify-center"
+              type="submit"
+            >
               Send OTP
-              </button>
-            </div>
+            </button>
           </form>
         </div>
       </div>

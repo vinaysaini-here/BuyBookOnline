@@ -27,31 +27,29 @@ const VerifyEmail = () => {
   };
 
   return (
-    <div className=" bg-[#f5f5f5]">
-      <div className="w-full h-screen flex items-start max-w-[80%] mx-auto">
-        <div className="relative w-1/2  h-full flex flex-col">
+    <div className="w-full min-h-screen flex items-center justify-center bg-HomeBgColor p-6">
+      <div className="max-w-4xl w-full bg-white/90 backdrop-blur-md shadow-lg rounded-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-2">
+        {/* Left: Image Section */}
+        <div className="hidden lg:block">
           <img
             src={assets.verification_img}
             className="w-full h-full object-cover"
+            alt="Verification"
           />
         </div>
-        <div className="w-1/2 h-full bg-[#f5f5f5] flex flex-col p-20 justify-center items-center ">
-          <div className=" w-full flex flex-col max-w-[500px] text-[#060606]">
-            <div className="w-full flex flex-col mb-2">
-              <h3 className="text-3xl font-semibold mb-2 text-center">
-                OTP Verification
-              </h3>
-
-              <p className="text-base mt-6 mb-4 text-center text-[#B3B4B5]">
-                Enter OTP sent to abc@example.com
-              </p>
-            </div>
+        <div className="p-8 lg:p-12 flex flex-col items-center text-center justify-center">
+          <h3 className="text-2xl sm:text-3xl font-bold text-black">
+            OTP Verification
+          </h3>
+          <p className="text-sm sm:text-base text-gray-600 mt-4">
+            Enter OTP sent to <span className="font-medium text-gray-800">abc@example.com</span>
+          </p>
             <form onSubmit={handleSubmit}>
-              <div className="w-full flex flex-col ">
+              <div className="w-full mt-6 flex flex-col">
                 <input
                   type="email"
                   placeholder="Email"
-                  className="w-full text-black py-2 my-2 bg-transparent border-b border-black focus: outline-none"
+                  className="w-full px-4 py-3 my-2 bg-gray-100 text-black border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4f5050] outline-none"
                   required
                   value={formData.email}
                   onChange={(e) =>
@@ -61,7 +59,7 @@ const VerifyEmail = () => {
                 <input
                   type="text"
                   placeholder="OTP"
-                  className="w-full text-black py-2 my-2 bg-transparent border-b border-black focus: outline-none"
+                  className="w-full px-4 py-3 my-2 bg-gray-100 text-black border border-gray-300 rounded-md focus:ring-2 focus:ring-[#4f5050] outline-none tracking-widest text-center text-xl"
                   value={formData.otp}
                   onChange={(e) =>
                     setFormData({ ...formData, otp: e.target.value })
@@ -70,7 +68,7 @@ const VerifyEmail = () => {
               </div>
               <div className="w-full flex flex-col my-4">
                 <button
-                  className="w-full text-white my-2 font-semibold bg-[#00aeff] rounded-md p-4 text-center flex items-center justify-center cursor-pointer"
+                  className="w-full mt-4 py-3 text-white font-semibold bg-black hover:bg-[#434444] rounded-md transition-all duration-300 flex items-center justify-center"
                   type="submit"
                   disabled={setotp}
                 >
@@ -88,7 +86,6 @@ const VerifyEmail = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

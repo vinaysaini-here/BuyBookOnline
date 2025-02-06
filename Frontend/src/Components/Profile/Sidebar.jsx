@@ -23,7 +23,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="hidden sm:block w-1/4 bg-gray-50 p-6  ">
+      <div className="hidden sm:block w-1/4 bg-gray-50 p-6 h-88vh">
         <div className="flex flex-col items-center">
           <div>
             <img
@@ -37,7 +37,7 @@ const Sidebar = () => {
             {user?.name}
           </h2>
           <p className="text-sm pt-1 pb-7 text-slate-800">{user?.email}</p>
-          <p className="text-sm pt-1 pb-7 text-slate-800">{user?._id}</p>
+          <p className="text-sm pt-1 pb-7 text-slate-600">{user?._id}</p>
         </div>
         <hr />
         {role === "user" && <div className="mt-12 space-y-8 text-lg flex items-center flex-col">
