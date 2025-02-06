@@ -63,7 +63,7 @@ app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: `${process.env.FRONTEND_HOST}/account/login`,
+    failureRedirect: `https://buybookonline.onrender.com/login`,
   }),
   (req, res) => {
     // Access user object and tokens from req.user
@@ -78,7 +78,7 @@ app.get(
     );
 
     // Successful authentication, redirect home.
-    res.redirect(`${process.env.FRONTEND_HOST}/`);
+    res.redirect(`https://buybookonline.onrender.com/`);
   }
 );
 
