@@ -19,8 +19,8 @@ const HomeMain = () => {
           Discover books
         </h1>
         <p className="mt-4 text-base md:text-xl text-white text-center">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum,
-          distinctio.
+          Welcome to BuyBooksOnline – Your One-Stop Destination for Books of All
+          Genres, Delivered to Your Doorstep!
         </p>
         <div className="mt-6 md:mt-8">
           <button
